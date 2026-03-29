@@ -54,17 +54,17 @@ public:
     /**
      * @brief Print tree contents in in-order traversal
      */
-    void InOrder() const;
+    void InOrder(void (*pf)(const T&)) const;
 
     /**
      * @brief Print tree contents in pre-order traversal
      */
-    void PreOrder() const;
+    void PreOrder(void (*pf)(const T&)) const;
 
     /**
      * @brief Print tree contents in post-order traversal
      */
-    void PostOrder() const;
+    void PostOrder(void (*pf)(const T&)) const;
 
     /**
      * @brief Delete all nodes from the tree
@@ -111,19 +111,19 @@ private:
      * @brief Recursive helper method for in-order traversal
      * @param tree Current node in the tree (or subtree)
      */
-    void inOrder(Node* tree) const;
+    void inOrder(Node* tree, void (*pf)(const T&)) const;
 
     /**
      * @brief Recursive helper method for pre-order traversal
      * @param tree Current node in the tree (or subtree)
      */
-    void preOrder(Node* tree) const;
+    void preOrder(Node* tree, void (*pf)(const T&)) const;
 
     /**
      * @brief Recursive helper method for post-order traversal
      * @param tree Current node in the tree (or subtree)
      */
-    void postOrder(Node* tree) const;
+    void postOrder(Node* tree, void (*pf)(const T&)) const;
 
     /**
      * @brief Recursively delete all nodes in a tree
@@ -201,26 +201,23 @@ bool Bst<T>::Search(const T& value) const
 
 // Public InOrder: Wrapper for in-order traversal (Left-Root-Right)
 template <class T>
-void Bst<T>::InOrder() const
+void Bst<T>::InOrder(void (*pf)(const T&)) const
 {
-    inOrder(root);
-    cout << endl;
+    inOrder(root, pf);
 }
 
 // Public PreOrder: Wrapper for pre-order traversal (Root-Left-Right)
 template <class T>
-void Bst<T>::PreOrder() const
+void Bst<T>::PreOrder(void (*pf)(const T&)) const
 {
-    preOrder(root);
-    cout << endl;
+    preOrder(root, pf);
 }
 
 // Public PostOrder: Wrapper for post-order traversal (Left-Right-Root)
 template <class T>
-void Bst<T>::PostOrder() const
+void Bst<T>::PostOrder(void (*pf)(const T&)) const
 {
-    postOrder(root);
-    cout << endl;
+    postOrder(root, pf);
 }
 
 // Public Clear: Delete all nodes from the tree
@@ -295,37 +292,37 @@ bool Bst<T>::search(Node* tree, const T& value) const
 
 // In-order traversal: Left-Root-Right
 template <class T>
-void Bst<T>::inOrder(Node* tree) const
+void Bst<T>::inOrder(Node* tree, void (*pf)(const T&)) const
 {
     if(tree != nullptr)
     {
-        inOrder(tree->left);       // Visit left subtree
-        cout << tree->data << " "; // Visit node
-        inOrder(tree->right);      // Visit right subtree
+        inOrder(tree->left, pf);       // Visit left subtree
+        pf(tree->data);            // Execute the pointer function on the data
+        inOrder(tree->right, pf);      // Visit right subtree
     }
 }
 
 // Pre-order traversal: Root-Left-Right
 template <class T>
-void Bst<T>::preOrder(Node* tree) const
+void Bst<T>::preOrder(Node* tree, void (*pf)(const T&)) const
 {
     if(tree != nullptr)
     {
-        cout << tree->data << " "; // Visit node
-        preOrder(tree->left);      // Visit left subtree
-        preOrder(tree->right);     // Visit right subtree
+       pf(tree->data);             // Execute the pointer function on the data
+        preOrder(tree->left, pf);      // Visit left subtree
+        preOrder(tree->right, pf);     // Visit right subtree
     }
 }
 
 // Post-order traversal: Left-Right-Root
 template <class T>
-void Bst<T>::postOrder(Node* tree) const
+void Bst<T>::postOrder(Node* tree, void (*pf)(const T&)) const
 {
     if(tree != nullptr)
     {
-        postOrder(tree->left);      // Visit left subtree
-        postOrder(tree->right);     // Visit right subtree
-        cout << tree->data << " "; // Visit node
+        postOrder(tree->left, pf);      // Visit left subtree
+        postOrder(tree->right, pf);     // Visit right subtree
+        pf(tree->data);             // Execute the pointer function on the data
     }
 }
 

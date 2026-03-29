@@ -1,2 +1,7 @@
 *.save
 *.layout
+*.gmon
+*.out
+*.depend
+*/obj/
+*/bin/

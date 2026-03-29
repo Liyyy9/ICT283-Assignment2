@@ -14,22 +14,26 @@ using namespace std;
 void printByReference(const Bst<Date>& tree);
 void printByValue(Bst<Date> tree);
 void LoadDateTree(Bst<Date>& dateTree);
+void PrintDate(const Date& d);
 
+void PrintDate(const Date& d) {
+        cout << "Date: " << d << endl;
+    }
 // Test function: Print tree by const reference
 // Purpose: Demonstrate passing object by const reference (no copying)
-void printByReference(const Bst<Date>& tree)
+/*void printByReference(const Bst<Date>& tree)
 {
     cout << "Tree passed by reference (InOrder): ";
     tree.InOrder();
-}
+}*/
 
 // Test function: Print tree by value
 // Purpose: Demonstrate passing object by value (invokes copy constructor)
-void printByValue(Bst<Date> tree)
+/*void printByValue(Bst<Date> tree)
 {
     cout << "Tree passed by value (PreOrder): ";
     tree.PreOrder();
-}
+}*/
 
 // Load all dates from CSV data files into the BST
 // Purpose: Populate the date tree with all unique dates from weather records
@@ -70,7 +74,7 @@ int main()
     cout << endl;
 
     // Test 2: Display tree using different traversal methods
-    cout << "InOrder Traversal: ";
+    /*cout << "InOrder Traversal: ";
     dateTree.InOrder();
     cout << endl;
 
@@ -80,7 +84,7 @@ int main()
 
     cout << "PostOrder Traversal: ";
     dateTree.PostOrder();
-    cout << endl;
+    cout << endl;*/
 
     // Test 3: Search for a specific date
     Date searchDate(22, 12, 2011);
@@ -96,12 +100,12 @@ int main()
     cout << endl;
 
     // Test 4: Test pass by const reference (no copy made)
-    printByReference(dateTree);
-    cout << endl;
+    //printByReference(dateTree);
+    //cout << endl;
 
     // Test 5: Test pass by value (invokes copy constructor)
-    printByValue(dateTree);
-    cout << endl;
+    //printByValue(dateTree);
+    //cout << endl;
 
     // --- Testing sPCC ---
     Vector<double> v1;
@@ -155,6 +159,13 @@ int main()
     } else {
         cout << "Test MAD: [FAIL] - Check if you forgot absolute values!" << endl;
     }
+
+    // Testing pointer fucntion
+    // 1. Create a "callback" function that matches the signature
+    cout << "Traversing tree using function pointer:" << endl;
+
+    // 2. Pass the function NAME as the argument
+    dateTree.InOrder(PrintDate);
 
     return 0;
 }
