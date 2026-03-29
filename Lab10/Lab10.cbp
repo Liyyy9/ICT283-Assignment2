@@ -64,6 +64,13 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="Main.cpp" />
+		<Unit filename="Map.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="MapTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Math.cpp" />
 		<Unit filename="Math.h" />
 		<Unit filename="MathTest.cpp">

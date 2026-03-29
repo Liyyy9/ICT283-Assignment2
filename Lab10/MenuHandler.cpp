@@ -342,8 +342,8 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
 
         ofile << GetMonthName(month) << ","
               << fixed << setprecision(1)
-              << avgWind << "," << sdWind << "," << madWind << ","
-              << avgTemp << "," << sdTemp << "," << madTemp <<  ","
+              << avgWind << "(" << sdWind << " " << madWind << "),"
+              << avgTemp << "(" << sdTemp << "" << madTemp <<  "),"
               << totalkWhm2 << endl;
     }
 
