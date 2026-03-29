@@ -1,7 +1,6 @@
 // ===============================================================
 // BstTest.cpp
-//       Comprehensive testing of Template BST class with
-//       Function Pointers
+//       Comprehensive testing of Template BST class
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
@@ -21,10 +20,16 @@ using std::cout;
 using std::endl;
 using std::string;
 
-// Print callback for Test 2
+// Print callback for Printing
 void SimplePrint(const Date& d)
 {
     cout << d << " ";
+}
+
+// Helper to test Pass-by-Value
+void TestPassByValue(Bst<Date> tempTree, const Date& checkDate, int& pass, int& fail) {
+    AssertEqual("Pass-by-value: Tree remains valid", tempTree.IsValid(), pass, fail);
+    AssertEqual("Pass-by-value: Tree contains data", tempTree.Search(checkDate), pass, fail);
 }
 
 int main()
@@ -34,55 +39,68 @@ int main()
     int failCount = 0;
     CollectU collector;
 
-    cout << "==== Running BST Function Pointer Test Cases ====" << endl
+    cout << "==== Running BST Test Cases ====" << endl
          << endl;
 
-    // -------- TEST 1: Basic Insertion and InOrder logic --------
-    cout << "--- Test 1 (BST Invariant and Manual Search) ---" << endl;
+    // -------- TEST 1: Basic Insertion and Invariant --------
+    cout << "--- Test 1 (Insertion & Invariant) ---" << endl;
     Bst<Date> tree;
-    Date d1(10,5,2025);
-    Date d2(22,12,2025);
-    Date d3(13,8,2025);
+    Date dRoot(15, 5, 2020);
+    Date dLeft(10, 5, 2020);
+    Date dRight(20, 5, 2020);
 
-    tree.Insert(d1);
-    tree.Insert(d2);
-    tree.Insert(d3);
+    tree.Insert(dRoot);
+    tree.Insert(dLeft);
+    tree.Insert(dRight);
 
     AssertEqual("BST Invariant is valid", tree.IsValid(), passCount, failCount);
-    AssertEqual("Search for existing date", tree.Search(d2), passCount, failCount);
     cout << endl;
 
-    // -------- TEST 2: Function Pointer Traversal (Printing) --------
-    cout << "--- Test 2 (Function Pointer: Simple Print) ---" << endl;
-    cout << "Expected: 10 May 2025 22 December 2025 13 August 2025" << endl;
-    cout << "Actual: ";
+    // -------- TEST 2: Search Logic --------
+    cout << "--- Test 2 (Search Logic) ---" << endl;
+    Date missingDate(1, 1, 1999);
+    AssertEqual("Search: Found existing element", tree.Search(dLeft), passCount, failCount);
+    AssertEqual("Search: Correctly missed non-existent element", tree.Search(missingDate) == false, passCount, failCount);
+    cout << endl;
+
+    // -------- TEST 3: Multiple Traversals (Function Pointers) --------
+    cout << "--- Test 3 (Traversals: In, Pre, Post) ---" << endl;
+    cout << "InOrder (Expected: 10/05/2020 15/05/2020 20/05/2020): " << endl << "   Actual: ";
     tree.InOrder(SimplePrint);
-    cout << endl << "Verify visually above." << endl << endl;
 
-    // -------- TEST 3: Data Collection --------
-    cout << "--- Test 3 (Data collection via Static Callback) ---" << endl;
+    cout << endl << "PreOrder (Expected: 15/05/2020 10/05/2020 20/05/2020): " << endl << "   Actual: ";
+    tree.PreOrder(SimplePrint);
+
+    cout << endl << "PostOrder (Expected: 10/05/2020 20/05/2020 15/05/2020): " << endl << "   Actual: ";
+    tree.PostOrder(SimplePrint);
+    cout << endl << endl;
+
+    // -------- TEST 4: Data Collection via Static Callback --------
+    cout << "--- Test 4 (CollectU collection via static callback) ---" << endl;
     collector.clear();
-
     tree.InOrder(CollectU::Collect);
 
-    AssertEqual("Collector size is 3", collector.size() == 3, passCount, failCount);
-    AssertEqual("First collected element is smallest (InOrder)",
-                collector[0] == d1, passCount, failCount);
-    AssertEqual("Last collected element is largest (InOrder)",
-                collector[2] == d2, passCount, failCount);
-
+    AssertEqual("Collector size matches tree size", collector.size() == 3, passCount, failCount);
+    AssertEqual("First element is correctly sorted", collector[0] == dLeft, passCount, failCount);
     cout << endl;
 
-    // -------- TEST 4: Deep Copy (Pass by Value) --------
-    cout << "--- Test 4 (Pass by Value/Copy Constructor) ---" << endl;
+    // -------- TEST 5: Deep Copy & Pass-by-Value --------
+    cout << "--- Test 5 (Copy Constructor & Scope) ---" << endl;
+    TestPassByValue(tree, dRoot, passCount, failCount);
 
     Bst<Date> copyTree = tree;
-    AssertEqual("Copy Tree is valid", copyTree.IsValid(), passCount, failCount);
-    AssertEqual("Copy Tree contains original data", copyTree.Search(d1), passCount, failCount);
+    copyTree.Insert(Date(30, 5, 2020));
 
-    copyTree.Insert(Date(1,1,2026));
-    AssertEqual("Original tree remains unchanged", tree.Search(Date(1,1,2026)) == false, passCount, failCount);
+    AssertEqual("Original tree size remains 3", tree.Search(Date(30,5,2020)) == false, passCount, failCount);
+    AssertEqual("Copy tree contains new element", copyTree.Search(Date(30,5,2020)), passCount, failCount);
+    cout << endl;
 
+    // -------- TEST 6: Assignment Operator --------
+    cout << "--- Test 6 (Assignment Operator) ---" << endl;
+    Bst<Date> assignedTree;
+    assignedTree = tree;
+    AssertEqual("Assigned tree is valid", assignedTree.IsValid(), passCount, failCount);
+    AssertEqual("Assigned tree has same data", assignedTree.Search(dRight), passCount, failCount);
     cout << endl;
 
     // -------- Summary --------
@@ -92,7 +110,7 @@ int main()
     cout << "       Total : " << (passCount + failCount) << endl
          << endl;
 
-    cout << "==== End of BST Function Pointer Test Cases ====" << endl;
+    cout << "==== End of BST Test Cases ====" << endl;
 
 
     return 0;

@@ -10,7 +10,6 @@
 #include "Date.h"
 #include "Vector.h"
 
-
 #ifndef COLLECTU_H_INCLUDED
 #define COLLECTU_H_INCLUDED
 

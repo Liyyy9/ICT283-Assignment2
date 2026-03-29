@@ -34,7 +34,7 @@ void MenuHandler::ShowMenu() const
          << endl;
     cout << "1. Average wind speed and standard deviation for this wind speed for a specified month and year." << endl;
     cout << "2. Average ambient air temperature and standard deviation for each month of a specified year." << endl;
-    cout << "3. Total solar radiation in kWh/m^2 for each month of a specified year." << endl;
+    cout << "3. Sample Pearson Correlation Coefficient (sPCC) for all variables for a specified month" << endl;
     cout << "4. Average wind speed (km/h), average ambient air temperature and total solar radiation in kWh/m^2 for each month of a specified year and export findings to WindTempSolar.csv." << endl;
     cout << "5. Exit program" << endl;
     cout << endl;
@@ -76,13 +76,13 @@ void MenuHandler::HandleChoice(int choice, const WeatherRecordCollection &data)
         break;
 
     case 3:
-        // Choice 3: Solar radiation analysis for all months of a year
-        cout << "Enter year: ";
-        cin >> year;
+        // Choice 3: Display sPCC combinations for specified month of all years
+        cout << "Enter month: ";
+        cin >> month;
 
         cout << endl;
 
-        TotalSolarRad_kWhm2_Choice3(year, data);
+        DisplaysPCC_Choice3(month, data);
 
         break;
 
@@ -203,49 +203,51 @@ void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordColl
     cout << endl;
 }
 
-// Analyses total solar radiation for each month of a specified year
-// Loops through all 12 months, filtering dataset for each month and year
-// Sums solar radiation values for each month and converts to kWh/m^2 by dividing by 6000
-// Displays "No Data" message for months with no records
-void MenuHandler::TotalSolarRad_kWhm2_Choice3(int year, const WeatherRecordCollection &data)
+// Analyses sPCC combinations for specified month of all years
+// Loops through all years, filtering dataset for specified month
+void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &data)
 {
     Math math;
 
-    cout << year << endl;
+    cout << "The combinations are:\n"
+         << "\ta) S_T: Average Wind Speed (S) and Ambient Air Temperature (T)\n"
+         << "\tb) S_R: Average Wind Speed (S) and Solar Radiation (R)\n"
+         << "\tc) T_R: Ambient Air Temperature (T) and Solar Radiation (R)\n"
+         << endl;
 
-    // Iterate through all 12 months
-    for (int month = 1; month <= 12; month++)
+    Vector<double> windS;
+    Vector<double> tempT;
+    Vector<double> solarR;
+
+    for(int i = 0; i < data.Size(); i++)
     {
-        double monthlySolarRadiationSum = 0.0f;
-        bool found = false;
-
-        // Sum solar radiation for all records above 100 in current month and year
-        for (int i = 0; i < data.Size(); i++)
+        if(data[i].GetDate().GetMonth() == month)
         {
-            if (data[i].GetDate().GetMonth() == month && data[i].GetDate().GetYear() == year)
-            {
-                if (data[i].GetSolarRad() >= 100)
-                {
-                    monthlySolarRadiationSum += data[i].GetSolarRad();
-                }
-
-                found = true;
-            }
+            windS.Add(data[i].GetSpeedKmH());
+            tempT.Add(data[i].GetAmbTemp());
+            solarR.Add(data[i].GetSolarRad());
         }
+    }
 
-        // Output results for this month or "No Data" message
-        if (!found)
-        {
-            cout << GetMonthName(month) << ": No Data" << endl;
-        }
-        else
-        {
-            // Convert to kWh/m^2 by dividing by 6000
-            double totalkWhm2 = monthlySolarRadiationSum / 6000;
+    cout << "Sample Pearson Correlation Coefficient for " << GetMonthName(month) << endl;
 
-            cout << GetMonthName(month) << ": "
-                 << fixed << setprecision(1) << totalkWhm2 << " kWh/m2" << endl;
-        }
+    if(windS.Size() < 2)
+    {
+        cout << "S_T: No data" << endl;
+        cout << "S_R: No data" << endl;
+        cout << "T_R: No data" << endl;
+
+    }
+    else
+    {
+        double s_t = math.CalculateSPCC(windS, tempT);
+        double s_r = math.CalculateSPCC(windS, solarR);
+        double t_r = math.CalculateSPCC(tempT, solarR);
+
+        cout << fixed << setprecision(2);
+        cout << "S_T: " << s_t << endl;
+        cout << "S_R: " << s_r << endl;
+        cout << "T_R: " << t_r << endl;
     }
 
     cout << endl;

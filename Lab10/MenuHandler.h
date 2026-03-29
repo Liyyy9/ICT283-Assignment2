@@ -99,7 +99,7 @@ public:
      *
      * @return void
      */
-    void TotalSolarRad_kWhm2_Choice3(int year, const WeatherRecordCollection &data);
+    void DisplaysPCC_Choice3(int year, const WeatherRecordCollection &data);
 
     /**
      * @brief Generates comprehensive weather report and exports to CSV file

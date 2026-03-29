@@ -5,3 +5,4 @@
 *.depend
 */obj/
 */bin/
+*.csv

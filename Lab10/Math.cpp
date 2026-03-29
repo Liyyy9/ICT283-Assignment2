@@ -16,7 +16,6 @@
 // Wind speed values are converted from m/s to km/h by multiplying by 3.6
 // Returns 0.0 if the vector is empty or column is invalid
 
-// TO DO: To pass a vector of floats or double instead, not a vector of weatherrecords
 double Math::CalculateMean(const Vector<double> &data)
 {
     int n = data.Size();

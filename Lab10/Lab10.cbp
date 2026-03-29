@@ -32,35 +32,79 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Bst.h" />
-		<Unit filename="BstTest.cpp" />
+		<Unit filename="BstTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="CSVHeaderReader.cpp" />
 		<Unit filename="CSVHeaderReader.h" />
+		<Unit filename="CSVHeaderReaderTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="CSVLoader.cpp" />
 		<Unit filename="CSVLoader.h" />
+		<Unit filename="CSVLoaderTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="CollectU.cpp" />
 		<Unit filename="CollectU.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="Constants.h" />
-		<Unit filename="Date.cpp" />
-		<Unit filename="Date.h" />
-		<Unit filename="Main.cpp">
+		<Unit filename="CollectUTest.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="Constants.h" />
+		<Unit filename="Date.cpp" />
+		<Unit filename="Date.h" />
+		<Unit filename="DateTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Main.cpp" />
 		<Unit filename="Math.cpp" />
 		<Unit filename="Math.h" />
+		<Unit filename="MathTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="MenuHandler.cpp" />
 		<Unit filename="MenuHandler.h" />
+		<Unit filename="MenuHandlerTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Time.cpp" />
 		<Unit filename="Time.h" />
+		<Unit filename="TimeTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Utilities.cpp" />
 		<Unit filename="Utilities.h" />
+		<Unit filename="UtilitiesTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Vector.h" />
+		<Unit filename="VectorTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="WeatherRecord.cpp" />
 		<Unit filename="WeatherRecord.h" />
 		<Unit filename="WeatherRecordCollection.cpp" />
 		<Unit filename="WeatherRecordCollection.h" />
+		<Unit filename="WeatherRecordCollectionTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="WeatherRecordTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
