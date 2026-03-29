@@ -315,10 +315,12 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
         // Calculate wind speed statistics
         double avgWind = math.CalculateMean(windSpeeds);
         double sdWind = math.CalculateSD(windSpeeds, avgWind);
+        double madWind = math.CalculateMAD(windSpeeds);
 
         // Calculate temperature statistics
         double avgTemp = math.CalculateMean(ambientTemps);
         double sdTemp = math.CalculateSD(ambientTemps, avgTemp);
+        double madTemp = math.CalculateMAD(ambientTemps);
 
         // Calculate solar radiation total
         double monthlySolarRadiationSum = 0.0;
@@ -334,14 +336,14 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
         // Output to console and file in same format
         cout << GetMonthName(month) << ","
              << fixed << setprecision(1)
-             << avgWind << "(" << sdWind << "),"
-             << avgTemp << "(" << sdTemp << "),"
+             << avgWind << "(" << sdWind << "," << madWind << "),"
+             << avgTemp << "(" << sdTemp << "," << madTemp <<  "),"
              << totalkWhm2 << endl;
 
         ofile << GetMonthName(month) << ","
               << fixed << setprecision(1)
-              << avgWind << "(" << sdWind << "),"
-              << avgTemp << "(" << sdTemp << "),"
+              << avgWind << "," << sdWind << "," << madWind << ","
+              << avgTemp << "," << sdTemp << "," << madTemp <<  ","
               << totalkWhm2 << endl;
     }
 

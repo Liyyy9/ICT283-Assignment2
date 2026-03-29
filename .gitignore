@@ -6,3 +6,5 @@
 */obj/
 */bin/
 *.csv
+cppcheck.txt
+*.xml
