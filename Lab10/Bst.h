@@ -148,11 +148,11 @@ private:
     bool checkInvariant(Node* tree, const T* min, const T* max) const;
 };
 
-// ====================================
+// ===============================================================
 // Implementation
-// ====================================
+// ===============================================================
 
-// Constructor: Initialize empty tree with null root
+// Constructor: Initialise empty tree with null root
 template <class T>
 Bst<T>::Bst()
 {
@@ -172,6 +172,7 @@ Bst<T>::Bst(const Bst<T>& other)
 {
     root = copyTree(other.root);
 }
+
 // Assignment Operator: Replace contents with a deep copy of another tree
 template <class T>
 Bst<T>& Bst<T>::operator=(const Bst<T>& other)
@@ -234,9 +235,9 @@ bool Bst<T>::IsValid() const
     return checkInvariant(root, nullptr, nullptr);
 }
 
-// ========================================
+// ===============================================================
 // Recursive helper methods implementation
-// ========================================
+// ===============================================================
 
 // Recursively insert a value into the BST
 // If tree is empty, create new node. Otherwise, recursively insert into left or right subtree

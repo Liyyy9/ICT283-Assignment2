@@ -140,6 +140,10 @@ private:
     vector<T> m_vector;
 };
 
+// ===============================================================
+// Implementation
+// ===============================================================
+
 // Parameterised Constructor
 template <class T>
 Vector<T>::Vector(int n)
