@@ -1,11 +1,11 @@
 // ===============================================================
 // WeatherRecordCollection.h
-//      Manages a collection of weather records
-//      Provides dynamic storage and access operations
+//      Manages a collection of weather records using a Nested map
+//      Storage: Year(Map) -> Month(Map) -> Records(BST)
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #ifndef WEATHERRECORDCOLLECTION_H_INCLUDED
@@ -14,73 +14,76 @@
 #include "Vector.h"
 #include "WeatherRecord.h"
 #include "Bst.h"
+#include "Map.h"
 
-//---------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------
 /**
  * @class WeatherRecordCollection
- * @brief Manages a collection of weather records
+ * @brief Manages a collection of weather records using a Nested map (Year -> Month -> BST)
  *
- * A container class that encapsulates a Vector<WeatherRecord> for managing
- * a dynamic collection of weather record objects. Provides a clean interface
- * for inserting, accessing, and querying weather records.
+ * Provides a hierachical storage system for efficient data retrieval. Records are sorted by the internal
+ * BST within each month.
  *
  * @author Liyana Afiqah Binte Jazmi
  * @version 01
  * @date 28/02/2026 Liyana Afiqah, Initial Implementation
+ *
+ * @version 02
+ * @date 31/03/2026, Liyana Afiqah, Refactored to implement Nested Map structure
  */
+ //-------------------------------------------------------------------------------------------
+
 class WeatherRecordCollection
 {
 
 public:
     /**
      * @brief Default constructor - initialises empty collection
-     *
-     * Creates a WeatherRecordCollection object with no records.
-     * The internal vector is initialised with default capacity.
-     *
-     * @return void
      */
     WeatherRecordCollection();
 
     /**
-     * @brief Inserts a weather record at specified position
+     * @brief Inserts a weather record into the hierarchical storage
      *
-     * Adds a new weather record to the collection at the specified index.
-     * Records at and after the specified position are shifted right.
+     * Uses the record's date to find the correct Year and Month (folder) location and inserts
+     * the record into the corresponding BST
      *
      * @param record Reference to the WeatherRecord object to insert
-     * @param index Position where the record should be inserted
      *
      * @return void
      */
-    void Insert(const WeatherRecord &record, int index);
+    void Insert(const WeatherRecord &record);
 
     /**
-     * @brief Returns the number of records in the collection
+     * @brief Returns the total number of years (drawer) in the collection
      *
-     * @return int - The current number of weather records stored in the collection
+     * @return int - Number of unique years stored
      */
-    int Size() const;
+    int GetYearCount() const;
 
     /**
-     * @brief Accesses a weather record at specified position
-     *
-     * Provides direct access to a weather record at the specified index
-     * using array subscript notation.
-     *
-     * @param index Position of the record to access
-     *
-     * @return WeatherRecord - A copy of the weather record at the specified position
+     * @brief Clears all years, months, and records from the collection
      */
-    WeatherRecord operator[](int index) const;
+    void Clear();
+
+    /**
+     * @brief Provides a read-only access to the internal storage
+     *
+     * @return const map reference to the inventory
+     */
+     const Map<int, Map<int, Bst<WeatherRecord>>>& GetInventory() const;
 
 private:
+
     /**
-     * @brief Internal storage for weather records
+     * @brief Hierarchical storage for weather records.
      *
-     * A dynamic array container that manages the actual weather record objects.
+     * The structure follows a nested organisation:
+     * Outer Map Key (int): The Year (acting as a 'drawer').
+     * Inner Map Key (int): The Month (acting as a 'folder').
+     * Value: A BST containing WeatherRecord objects for that specific month and year.
      */
-    Vector<WeatherRecord> records;
+    Map<int, Map<int, Bst<WeatherRecord>>> m_inventory;
 };
 
 #endif // WEATHERRECORDCOLLECTION_H_INCLUDED

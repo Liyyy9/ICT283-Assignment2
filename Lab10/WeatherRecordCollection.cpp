@@ -1,33 +1,41 @@
 // ===============================================================
 // WeatherRecordCollection.cpp
-//      Manages a collection of weather records
-//      Provides dynamic storage and access operations
+//      Manages a collection of weather records using a Nested map
+//      Storage: Year(Map) -> Month(Map) -> Records(BST)
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
+
 #include "WeatherRecordCollection.h"
 #include "WeatherRecord.h"
 
-// Default constructor implementation - initialises empty collection
-// Initialises the internal Vector to manage weather records.
+// Default constructor implementation
 WeatherRecordCollection::WeatherRecordCollection() {}
 
-// Insert implementation - adds record at specified position
-void WeatherRecordCollection::Insert(const WeatherRecord &record, int index)
+// Hierarchical Insert implementation
+void WeatherRecordCollection::Insert(const WeatherRecord &record)
 {
-    records.Insert(record, index);
+    int year = record.GetDate().GetYear();
+    int month = record.GetDate().GetMonth();
+
+    m_inventory[year][month].Insert(record);
 }
 
-// Size implementation - returns current number of records
-int WeatherRecordCollection::Size() const
+// GetYearCount implementation - returns total number of Year (Drawers)
+int WeatherRecordCollection::GetYearCount() const
 {
-    return records.Size();
+    return m_inventory.Size();
 }
 
-// Operator[] implementation - provides indexed access
-WeatherRecord WeatherRecordCollection::operator[](int index) const
+// Clears the entire collection
+void WeatherRecordCollection::Clear()
 {
-    return records[index];
+    m_inventory.Clear();
+}
+
+const Map<int, Map<int, Bst<WeatherRecord>>>& WeatherRecordCollection::GetInventory()
+{
+    return m_inventory;
 }
