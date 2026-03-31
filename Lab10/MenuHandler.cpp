@@ -15,6 +15,7 @@
 #include "Date.h"
 #include "Vector.h"
 #include "Utilities.h"
+#include "CollectU.h"
 
 #include <iomanip>
 #include <iostream>
@@ -91,9 +92,9 @@ void MenuHandler::HandleChoice(int choice, const WeatherRecordCollection &data)
         cout << "Enter year: ";
         cin >> year;
 
-        cout << endl;
+        cout << "option 4 temporarily unavailable" << endl;
 
-        DisplayAllFindings_Choice4(year, data);
+        //DisplayAllFindings_Choice4(year, data);
         break;
 
     case 5:
@@ -116,42 +117,42 @@ void MenuHandler::HandleChoice(int choice, const WeatherRecordCollection &data)
 void MenuHandler::WindAvgStdDev_Choice1(int month, int year, const WeatherRecordCollection &data)
 {
     Math math;
+    CollectU collector;
 
-    // Create filtered collection for provided month and year
-    WeatherRecordCollection monthlyData;
+    // Ensure that storage is empty
+    collector.clear();
 
-    for (int i = 0; i < data.GetYearCount(); i++)
+    // Retrieve the nested map structure
+    const Map<int, Map<int, Bst<WeatherRecord>>>& inventory = data.GetInventory();
+
+    // Check if the specific year and month keys exist in the inventory
+    if(inventory.Contains(year) && inventory.At(year).Contains(month))
     {
-        if (data[i].GetDate().GetMonth() == month && data[i].GetDate().GetYear() == year)
-        {
-            monthlyData.Insert(data[i], monthlyData.GetYearCount());
-        }
-    }
+        // Traverses the BST for the specific month/year and populates the collection
+        inventory.At(year).At(month).InOrder(CollectU::CollectWindSpeed);
 
-    // Output results for this month or "No Data" message
-    if (monthlyData.Size() == 0)
-    {
-        cout << GetMonthName(month) << " " << year << ": No Data" << endl
-             << endl;
-    }
-    else
-    {
-        Vector<double> windSpeeds;
-        for (int i = 0; i < monthlyData.Size(); i++)
-        {
-            double windSpeed_kmh = monthlyData[i].GetSpeedKmH();
-            windSpeeds.Insert(windSpeed_kmh, windSpeeds.Size());
-        }
+        Vector<double>& results = collector.GetCollection();
 
-        double mean = math.CalculateMean(windSpeeds);
-        double sd = math.CalculateSD(windSpeeds, mean);
+        // Compute statistical calculations
+        double mean = math.CalculateMean(results);
+        double sd = math.CalculateSD(results, mean);
 
+        // Display output
         cout << GetMonthName(month) << " " << year << ": " << '\n'
              << "Average speed: " << fixed << setprecision(1) << mean << " km/h\n"
              << "Sample stdev: " << fixed << setprecision(1) << sd << endl
              << endl;
     }
+    else
+    {
+        // Handle cases where no data matches input
+        cout << GetMonthName(month) << " " << year << ": No Data" << endl
+             << endl;
+    }
+
+    cout << endl;
 }
+
 
 // Analyses ambient temperature for each month of a specified year
 // Loops through all 12 months, filtering dataset for each month and year
@@ -160,43 +161,51 @@ void MenuHandler::WindAvgStdDev_Choice1(int month, int year, const WeatherRecord
 void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordCollection &data)
 {
     Math math;
+    CollectU collector;
+
+    const Map<int, Map<int, Bst<WeatherRecord>>>& inventory = data.GetInventory();
 
     cout << year << endl;
+
+    if(!inventory.Contains(year))
+    {
+        cout << "No data for this year" << endl;
+        return;
+    }
 
     // Iterate through all 12 months
     for (int month = 1; month <= 12; month++)
     {
-        // Create filtered collection for current month and year
-        WeatherRecordCollection monthlyData;
+        // Ensure that storage is empty
+        collector.clear();
 
-        for (int i = 0; i < data.Size(); i++)
+        const Map<int, Bst<WeatherRecord>>& monthMap = inventory.At(year);
+
+        if(monthMap.Contains(month))
         {
-            if (data[i].GetDate().GetMonth() == month && data[i].GetDate().GetYear() == year)
+            const Bst<WeatherRecord>& monthBst = monthMap.At(month);
+
+            monthBst.InOrder(CollectU::CollectAmbientTemp);
+
+            Vector<double>& results = collector.GetCollection();
+
+            if(results.Size() > 0)
             {
-                monthlyData.Insert(data[i], monthlyData.Size());
-            }
-        }
+                double mean = math.CalculateMean(results);
+                double sd = math.CalculateSD(results, mean);
 
-        // Output results for this month or "No Data" message
-        if (monthlyData.Size() == 0)
-        {
-            cout << GetMonthName(month) << ": No Data" << endl;
+                cout << GetMonthName(month) << ": "
+                 << "average: " << fixed << setprecision(1) << mean << " degrees C, "
+                 << "stdev: " << fixed << setprecision(1) << sd << endl;
+            }
+            else
+            {
+                cout << GetMonthName(month) << ": No Data" << endl;
+            }
         }
         else
         {
-            Vector<double> ambientTemps;
-            for (int i = 0; i < monthlyData.Size(); i++)
-            {
-                double temp_C = monthlyData[i].GetAmbTemp();
-                ambientTemps.Insert(temp_C, ambientTemps.Size());
-            }
-
-            double mean = math.CalculateMean(ambientTemps);
-            double sd = math.CalculateSD(ambientTemps, mean);
-
-            cout << GetMonthName(month) << ": "
-                 << "average: " << fixed << setprecision(1) << mean << " degrees C, "
-                 << "stdev: " << fixed << setprecision(1) << sd << endl;
+            cout << GetMonthName(month) << ": No Data" << endl;
         }
     }
 
@@ -208,6 +217,8 @@ void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordColl
 void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &data)
 {
     Math math;
+    CollectU collector;
+    const Map<int, Map<int, Bst<WeatherRecord>>>& inventory = data.GetInventory();
 
     cout << "The combinations are:\n"
          << "\ta) S_T: Average Wind Speed (S) and Ambient Air Temperature (T)\n"
@@ -219,15 +230,38 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
     Vector<double> tempT;
     Vector<double> solarR;
 
-    for(int i = 0; i < data.Size(); i++)
+    collector.clear();
+    for(Map<int, Map<int, Bst<WeatherRecord>>>::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
     {
-        if(data[i].GetDate().GetMonth() == month)
+        const Map<int, Bst<WeatherRecord>>& monthMap = it->second;
+        if(monthMap.Contains(month))
         {
-            windS.Add(data[i].GetSpeedKmH());
-            tempT.Add(data[i].GetAmbTemp());
-            solarR.Add(data[i].GetSolarRad());
+            monthMap.At(month).InOrder(CollectU::CollectWindSpeed);
         }
     }
+    windS = collector.GetCollection();
+
+    collector.clear();
+    for(Map<int, Map<int, Bst<WeatherRecord>>>::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
+    {
+        const Map<int, Bst<WeatherRecord>>& monthMap = it->second;
+        if(monthMap.Contains(month))
+        {
+            monthMap.At(month).InOrder(CollectU::CollectAmbientTemp);
+        }
+    }
+    tempT = collector.GetCollection();
+
+    collector.clear();
+    for(Map<int, Map<int, Bst<WeatherRecord>>>::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
+    {
+        const Map<int, Bst<WeatherRecord>>& monthMap = it->second;
+        if(monthMap.Contains(month))
+        {
+            monthMap.At(month).InOrder(CollectU::CollectSolarRad);
+        }
+    }
+    solarR = collector.GetCollection();
 
     cout << "Sample Pearson Correlation Coefficient for " << GetMonthName(month) << endl;
 
@@ -257,7 +291,7 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
 // Calculates wind speed, temperature, and solar radiation statistics
 // Displays results to console and exports to WindTempSolar.csv
 // Format: Month,AvgWind(StdevWind),AvgTemp(StdevTemp),SolarRadiation
-void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollection &data)
+/*void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollection &data)
 {
     Math math;
 
@@ -359,4 +393,4 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
     }
 
     cout << endl;
-}
+}*/

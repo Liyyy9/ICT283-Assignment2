@@ -152,6 +152,8 @@ public:
      */
     void SetSolarRad(int sr);
 
+    bool operator<(const WeatherRecord& other) const;
+
 private:
     Date d;        /// Date of the wind measurement
     Time t;        /// Time of the wind measurement

@@ -92,6 +92,8 @@ public:
      */
     void SetMins(int mins);
 
+    bool operator<(const Time& other) const;
+
 private:
     int m_hour;
     int m_mins;

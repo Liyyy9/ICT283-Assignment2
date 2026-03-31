@@ -52,6 +52,13 @@ public:
     bool Contains(const K& key) const;
 
     /**
+     * @brief Access value associated to key
+     * @param k The key search for
+     * @return const T& Constant reference to the value associated with the key
+     */
+     const T& At(const K& key) const;
+
+    /**
      * @brief Returns number of elements.
      */
     int Size() const;
@@ -104,6 +111,12 @@ template <class K, class T>
 int Map<K, T>::Size() const
 {
     return m_data.size();
+}
+
+template <class K, class T>
+const T& Map<K, T>::At(const K& key) const
+{
+    return m_data.at(key);
 }
 
 template <class K, class T>

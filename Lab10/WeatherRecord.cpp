@@ -96,3 +96,17 @@ void WeatherRecord::SetSolarRad(int sr)
 {
     solarRad = sr;
 }
+
+bool WeatherRecord::operator<(const WeatherRecord& other) const
+{
+    if(this->d < other.d)
+    {
+        return true;
+    }
+    if(other.d < this->d)
+    {
+        return false;
+    }
+
+    return (this->t < other.t);
+}

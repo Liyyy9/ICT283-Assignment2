@@ -1,29 +1,37 @@
 // ===================================================================
 // CollectU.cpp
+//      Collector class to store data retrieved from BST via fpointer
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 10
+// Project: ICT283 - Assignment 2
 // ===================================================================
 
 #include "CollectU.h"
 #include "Utilities.h"
+#include "Vector.h"
 
 #include <iostream>
 
 using std::cout;
 using std::endl;
 
-// Initialise static members
-Vector<Date> CollectU::A;
+// Initialise static member
+Vector<double> CollectU::A;
 
-void CollectU::Collect(const Date& data)
+void CollectU::CollectWindSpeed(const WeatherRecord& record)
 {
-    // Trace message
-    cout << "Collecting element #" << A.Size()
-         << " : " << data << endl;
+    A.Add(record.GetSpeedKmH());
+}
 
-    A.Add(data);
+void CollectU::CollectAmbientTemp(const WeatherRecord& record)
+{
+    A.Add(record.GetAmbTemp());
+}
+
+void CollectU::CollectSolarRad(const WeatherRecord& record)
+{
+    A.Add(record.GetSolarRad());
 }
 
 int CollectU::size() const
@@ -31,9 +39,14 @@ int CollectU::size() const
     return A.Size();
 }
 
-Date& CollectU::operator[](int k)
+double& CollectU::operator[](int k)
 {
     return A[k];
+}
+
+Vector<double>& CollectU::GetCollection()
+{
+    return A;
 }
 
 void CollectU::clear()

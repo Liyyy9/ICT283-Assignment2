@@ -60,3 +60,13 @@ void Time::SetMins(int mins)
 {
     m_mins = mins;
 }
+
+bool Time::operator<(const Time& other) const
+{
+    if(this->m_hour != other.m_hour)
+    {
+        return this->m_hour < other.m_hour;
+    }
+
+    return this->m_mins < other.m_mins;
+}

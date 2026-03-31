@@ -5,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #ifndef MENUHANDLER_H_INCLUDED
@@ -32,7 +32,12 @@ using std::string;
  * @version 01
  * @date 28/02/2026 Liyana Afiqah, Initial Implementation
  *
+ * @version 02
+ * @date 31/03/2026 Liyana Afiqah, Updated to integrate Map/BST data structure
+ *
  */
+ //---------------------------------------------------------------------------------
+
 class MenuHandler
 {
 public:
@@ -61,14 +66,15 @@ public:
     void HandleChoice(int choice, const WeatherRecordCollection &data);
 
     /**
-     * @brief Analyses average wind speed and standard deviation for a specific month
+     * @brief Calculates and displays the mean wind speed and standard deviation for a specific month
      *
-     * Filters dataset by month and year, then calculates mean and sample standard deviation
-     * of wind speeds (in km/h) for records matching the specified month and year.
+     * Filters the WeatherRecordCollection by specified month and year.
+     * If data exists, it performs InOrder traversal of the BST to collect wind speeds, calculates
+     * mean and sample standard deviation of wind speeds, and outputs them to console in km/h
      *
      * @param month The month to analyse (1-12)
      * @param year The year to analyse
-     * @param data Reference to the WeatherRecordLog containing all records
+     * @param data The collection containing weather records organised by year and month
      *
      * @return void
      */
@@ -82,7 +88,7 @@ public:
      * for each month in the specified year.
      *
      * @param year The year to analyse
-     * @param data Reference to the WeatherRecordLog containing all records
+     * @param data The collection containing weather records organised by year and month
      *
      * @return void
      */
@@ -95,7 +101,7 @@ public:
      * Sums solar radiation values for each month and converts to kWh/m^2 by dividing by 6000.
      *
      * @param year The year to analyse
-     * @param data Reference to the WeatherRecordLog containing all records
+     * @param data The collection containing weather records organised by year and month
      *
      * @return void
      */
@@ -110,7 +116,7 @@ public:
      * Month,AvgWind(StdevWind),AvgTemp(StdevTemp),SolarRadiation
      *
      * @param year The year to analyse
-     * @param data Reference to the WeatherRecordLog containing all records
+     * @param data The collection containing weather records organised by year and month
      *
      * @return void
      */
