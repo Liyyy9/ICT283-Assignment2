@@ -6,7 +6,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 10
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #include "Date.h"
@@ -40,7 +40,7 @@ int main()
 
     WeatherRecordCollection weather_data = loader.LoadAllCSV();
 
-    if(weather_data.Size() == 0)
+    if(weather_data.GetYearCount() == 0)
     {
         cout << "Failed to load data\n";
         return -1;

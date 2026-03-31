@@ -120,11 +120,11 @@ void MenuHandler::WindAvgStdDev_Choice1(int month, int year, const WeatherRecord
     // Create filtered collection for provided month and year
     WeatherRecordCollection monthlyData;
 
-    for (int i = 0; i < data.Size(); i++)
+    for (int i = 0; i < data.GetYearCount(); i++)
     {
         if (data[i].GetDate().GetMonth() == month && data[i].GetDate().GetYear() == year)
         {
-            monthlyData.Insert(data[i], monthlyData.Size());
+            monthlyData.Insert(data[i], monthlyData.GetYearCount());
         }
     }
 

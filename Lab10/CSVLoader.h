@@ -5,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #ifndef CSVLOADER_H_INCLUDED
@@ -13,7 +13,7 @@
 
 #include "WeatherRecordCollection.h"
 
-//---------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 /**
  * @class CSVLoader
  * @brief Handles CSV file loading and weather data parsing
@@ -28,22 +28,27 @@
  *
  * @version 02
  * @date 09/03/2026 Liyana Afiqah, Refactored to read multiple files
+ *
+ * @version 03
+ * @date 31/03/2026 Liyana Afiqah, Assignment 2: Updated to work with Map-based collection
  */
+ //--------------------------------------------------------------------------------------
+
 class CSVLoader
 {
 public:
     /**
-     * @brief Loads CSV weather data and returns populated collection
+     * @brief Loads CSV weather data and returns a hierarchically populated collection
      *
-     * Reads the filename from data_source.txt, opens the CSV file, parses the header
+     * Reads file names from data_source.txt, opens the CSV file, parses the header
      * to identify column positions, and iterates through all records. For each record,
      * extracts date, time, wind speed, ambient temperature, and solar radiation values.
      * Converts text values to appropriate numeric types and creates WeatherRecord objects.
-     * Returns a complete WeatherRecordCollection containing all successfully parsed records.
-     * Returns an empty collection if file cannot be opened or header cannot be read.
+     * For each valid record, a WeatherRecord object is created and inserted into the
+     * WeatherRecordCollection, which organises the data into a nested Map/BST structure
      *
-     * @return WeatherRecordCollection - Populated collection of weather records,
-     *         or empty collection if loading fails
+     * @return WeatherRecordCollection - A collection organised by Year and Month containing
+     * all successfully parsed weather records.
      */
     WeatherRecordCollection LoadAllCSV();
 };

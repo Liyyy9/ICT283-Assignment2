@@ -5,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #include "CSVLoader.h"
@@ -72,11 +72,12 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
         ifstream infile(PATH + infileName);
 
         // Check if file opened successfully
+        // Skips to next file if unable to open
         if (!infile)
         {
             cout << "Error opening: " << infileName << "\n"
                  << endl;
-            return WeatherRecordCollection();
+            continue;
         }
 
         // Read header and get column indexes for date/time, speed, ambient temperature, solar radiation
@@ -171,7 +172,9 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
 
             // Create a new weather record and add it to our collection
             WeatherRecord record(tempDate, tempTime, speed, amb, sr);
-            weather_data.Insert(record, weather_data.Size());
+
+            // Inserts record into Map
+            weather_data.Insert(record);
 
             recordsInThisFile++;
 
@@ -186,9 +189,7 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
         fileCount++;
     }
 
-
     source.close();
-
 
     // Tell the user how many records were loaded
     cout << "Total records loaded: " << total << " from " << fileCount << " files.\n" << endl

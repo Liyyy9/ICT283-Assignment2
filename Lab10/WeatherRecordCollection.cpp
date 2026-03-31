@@ -10,6 +10,7 @@
 
 #include "WeatherRecordCollection.h"
 #include "WeatherRecord.h"
+#include "Map.h"
 
 // Default constructor implementation
 WeatherRecordCollection::WeatherRecordCollection() {}
@@ -35,7 +36,7 @@ void WeatherRecordCollection::Clear()
     m_inventory.Clear();
 }
 
-const Map<int, Map<int, Bst<WeatherRecord>>>& WeatherRecordCollection::GetInventory()
+const Map<int, Map<int, Bst<WeatherRecord>>>& WeatherRecordCollection::GetInventory() const
 {
     return m_inventory;
 }
