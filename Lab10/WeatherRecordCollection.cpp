@@ -24,6 +24,20 @@ void WeatherRecordCollection::Insert(const WeatherRecord &record)
     m_inventory[year][month].Insert(record);
 }
 
+void WeatherRecordCollection::InsertFromMidPoint(Vector<WeatherRecord>& fileRecords, int low, int high)
+{
+    if(low > high)
+    {
+        return;
+    }
+
+    int mid = low + (high - low) / 2;
+
+    this->Insert(fileRecords[mid]);
+    InsertFromMidPoint(fileRecords, low, mid - 1);
+    InsertFromMidPoint(fileRecords, mid + 1, high);
+}
+
 // GetYearCount implementation - returns total number of Year (Drawers)
 int WeatherRecordCollection::GetYearCount() const
 {

@@ -19,6 +19,7 @@
 #include "MenuHandler.h"
 #include "Constants.h"
 #include "Utilities.h"
+#include "Sort.h"
 
 #include <iostream>
 #include <fstream>
@@ -54,6 +55,8 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
         cout << "Error opening: " << PATH << dataSource << endl;
         return WeatherRecordCollection();
     }
+
+    Vector<WeatherRecord> fileRecords;
 
     // Create one collection for all data read from multiple files
     WeatherRecordCollection weather_data;
@@ -173,12 +176,18 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
             // Create a new weather record and add it to our collection
             WeatherRecord record(tempDate, tempTime, speed, amb, sr);
 
-            // Inserts record into Map
-            weather_data.Insert(record);
+            fileRecords.Add(record);
 
             recordsInThisFile++;
 
         }
+
+        Sort sorter;
+        sorter.ExecuteSort(0, fileRecords.Size() - 1, fileRecords);
+
+        weather_data.InsertFromMidPoint(fileRecords, 0, fileRecords.Size() - 1);
+
+        fileRecords.Clear();
 
         // Close the file when we're done reading
         infile.close();

@@ -30,6 +30,9 @@
  *
  * @version 02
  * @date 31/03/2026, Liyana Afiqah, Assignment 2: Refactored to implement Nested Map structure
+ *
+ * @version 03
+ * @date 03/03/2026 Liyana Afiqah, Assignment 2: Implemented insertion via mid point of Vector
  */
  //-------------------------------------------------------------------------------------------
 
@@ -53,6 +56,8 @@ public:
      * @return void
      */
     void Insert(const WeatherRecord &record);
+
+    void InsertFromMidPoint(Vector<WeatherRecord>& fileRecords, int low, int high);
 
     /**
      * @brief Returns the total number of years (drawer) in the collection
