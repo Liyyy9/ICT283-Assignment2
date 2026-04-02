@@ -41,7 +41,7 @@ int CollectU::size() const
 
 double& CollectU::operator[](int k)
 {
-    return A[k];
+    return CollectU::A[k];
 }
 
 Vector<double>& CollectU::GetCollection()

@@ -27,7 +27,7 @@ void Sort::ExecuteSort(int low, int high, Vector<WeatherRecord>& records)
     }
 }
 
-void Split(int low, int high, Vector<WeatherRecord)& records, int& pivotIndex)
+void Sort::Split(int low, int high, Vector<WeatherRecord>& records, int& pivotIndex)
 {
     WeatherRecord pValue = records[low];
     int index1 = low;

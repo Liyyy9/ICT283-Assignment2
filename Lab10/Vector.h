@@ -111,17 +111,6 @@ public:
     T& operator[](int pos);
 
     /**
-     * @brief Accesses element at specified position for modification - Update operation
-     *
-     * Provides non-const access to the element at specified position.
-     *
-     * @param pos Position of element to access
-     *
-     * @return Reference to the element at specified position
-     */
-    T &operator[](const int &pos);              // Update
-
-    /**
      * @brief Returns the number of elements in the vector
      *
      * @return int - The current size of the vector
@@ -213,13 +202,6 @@ const T &Vector<T>::operator[](int pos) const
 
 template <class T>
 T &Vector<T>::operator[](int pos)
-{
-    return m_vector[pos];
-}
-
-// Update implementation
-template <class T>
-T &Vector<T>::operator[](const int &pos)
 {
     return m_vector[pos];
 }
