@@ -107,6 +107,9 @@ public:
      */
     const T &operator[](int pos) const;         // Read
 
+    /// Non-const version for accessing. Only used for sorting Vector of records before Inserting into BST
+    T& operator[](int pos);
+
     /**
      * @brief Accesses element at specified position for modification - Update operation
      *
@@ -204,6 +207,12 @@ bool Vector<T>::Remove(int pos)
 // Read implemetation
 template <class T>
 const T &Vector<T>::operator[](int pos) const
+{
+    return m_vector[pos];
+}
+
+template <class T>
+T &Vector<T>::operator[](int pos)
 {
     return m_vector[pos];
 }
