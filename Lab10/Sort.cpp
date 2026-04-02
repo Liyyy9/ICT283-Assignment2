@@ -29,34 +29,32 @@ void Sort::ExecuteSort(int low, int high, Vector<WeatherRecord>& records)
 
 void Sort::Split(int low, int high, Vector<WeatherRecord>& records, int& pivotIndex)
 {
-    WeatherRecord pValue = records[low];
-    int index1 = low;
-    int index2 = high;
 
-    while(index1 < index2)
+    int mid = low + (high - low) / 2;
+
+    WeatherRecord tempRecord = records[mid];
+    records[mid] = records[high];
+    records[high] = tempRecord;
+
+    WeatherRecord pValue = records[high];
+    int i = low - 1;
+
+    for(int j = low; j < high; j++)
     {
-        while(!(pValue < records[index1]) && index1 < index2)
+        if(records[j] < pValue || records[j] == pValue)
         {
-            index1++;
-        }
-
-        while(pValue < records[index2] && index2 > index1)
-        {
-            index2--;
-        }
-
-        if(index1 < index2)
-        {
+            i++;
             WeatherRecord tempRecord;
-            tempRecord = records[index2];
-            records[index2] = records[index1];
-            records[index1] = tempRecord;
+            tempRecord = records[i];
+            records[i] = records[j];
+            records[j] = tempRecord;
         }
     }
-    pivotIndex = index2 - 1;
 
-    WeatherRecord tempRecord;
-    tempRecord = records[low];
-    records[low] = records[pivotIndex];
-    records[pivotIndex] = tempRecord;
+    WeatherRecord finalTemp;
+    finalTemp = records[i + 1];
+    records[i + 1] = records[high];
+    records[high] = finalTemp;
+
+    pivotIndex = i + 1;
 }

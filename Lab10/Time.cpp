@@ -70,3 +70,12 @@ bool Time::operator<(const Time& other) const
 
     return this->m_mins < other.m_mins;
 }
+
+bool Time::operator==(const Time& other) const
+{
+    if(this->m_hour != other.m_hour)
+    {
+        return false;
+    }
+    return this->m_mins == other.m_mins;
+}

@@ -110,3 +110,13 @@ bool WeatherRecord::operator<(const WeatherRecord& other) const
 
     return (this->t < other.t);
 }
+
+bool WeatherRecord::operator==(const WeatherRecord& other) const
+{
+    if(!(this->d == other.d))
+    {
+        return false;
+    }
+
+    return (this->t == other.t);
+}

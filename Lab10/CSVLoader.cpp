@@ -65,6 +65,8 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
     string infileName;
     while(getline(source, infileName))
     {
+        fileRecords.Clear();
+
         if (infileName.empty())
         {
             cout << dataSource << " does not contain a file name." << endl;
@@ -186,8 +188,6 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
         sorter.ExecuteSort(0, fileRecords.Size() - 1, fileRecords);
 
         weather_data.InsertFromMidPoint(fileRecords, 0, fileRecords.Size() - 1);
-
-        fileRecords.Clear();
 
         // Close the file when we're done reading
         infile.close();
