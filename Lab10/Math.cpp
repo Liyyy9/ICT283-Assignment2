@@ -88,8 +88,6 @@ double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
     double yDiff = 0.0;
     double sumXDiffSq = 0.0;
     double sumYDiffSq = 0.0;
-    double sumxMinusXBarSq = 0.0;
-    double sumyMinusYBarSq = 0.0;
 
     double numerator = 0.0;
     double denominator = 0.0;
