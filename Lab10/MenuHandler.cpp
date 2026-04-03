@@ -5,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #include "MenuHandler.h"
@@ -91,9 +91,8 @@ void MenuHandler::HandleChoice(int choice, const WeatherRecordCollection &data)
         cout << "Enter year: ";
         cin >> year;
 
-        cout << "option 4 temporarily unavailable" << endl;
+        DisplayAllFindings_Choice4(year, data);
 
-        //DisplayAllFindings_Choice4(year, data);
         break;
 
     case 5:
@@ -290,9 +289,12 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
 // Calculates wind speed, temperature, and solar radiation statistics
 // Displays results to console and exports to WindTempSolar.csv
 // Format: Month,AvgWind(StdevWind),AvgTemp(StdevTemp),SolarRadiation
-/*void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollection &data)
+void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollection &data)
 {
     Math math;
+    CollectU collector;
+
+    const Map<int, Map<int, Bst<WeatherRecord>>>& inventory = data.GetInventory();
 
     // Open output file for CSV export
     string exportFileName = "WindTempSolar.csv";
@@ -309,87 +311,83 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
 
     bool dataLoaded = false;
 
-    // Iterate through all 12 months
-    for (int month = 1; month <= 12; month++)
-    {
-        // Create filtered collection for current month and year
-        WeatherRecordCollection monthlyData;
-
-        for (int i = 0; i < data.Size(); i++)
-        {
-            if (data[i].GetDate().GetMonth() == month && data[i].GetDate().GetYear() == year)
-            {
-                monthlyData.Insert(data[i], monthlyData.Size());
-
-                dataLoaded = true;
-            }
-        }
-
-        // Skip months with no data
-        if (monthlyData.Size() == 0)
-        {
-            continue;
-        }
-
-        Vector<double> windSpeeds;
-        for (int i = 0; i < monthlyData.Size(); i++)
-        {
-            double windSpeed_kmh = monthlyData[i].GetSpeedKmH();
-            windSpeeds.Insert(windSpeed_kmh, windSpeeds.Size());
-        }
-
-        Vector<double> ambientTemps;
-        for (int i = 0; i < monthlyData.Size(); i++)
-        {
-            double temp_C = monthlyData[i].GetAmbTemp();
-            ambientTemps.Insert(temp_C, ambientTemps.Size());
-        }
-
-        // Calculate wind speed statistics
-        double avgWind = math.CalculateMean(windSpeeds);
-        double sdWind = math.CalculateSD(windSpeeds, avgWind);
-        double madWind = math.CalculateMAD(windSpeeds);
-
-        // Calculate temperature statistics
-        double avgTemp = math.CalculateMean(ambientTemps);
-        double sdTemp = math.CalculateSD(ambientTemps, avgTemp);
-        double madTemp = math.CalculateMAD(ambientTemps);
-
-        // Calculate solar radiation total
-        double monthlySolarRadiationSum = 0.0;
-
-        for (int i = 0; i < monthlyData.Size(); i++)
-        {
-            monthlySolarRadiationSum += monthlyData[i].GetSolarRad();
-        }
-
-        // Convert to kWh/m^2 by dividing by 6000
-        double totalkWhm2 = monthlySolarRadiationSum / 6000;
-
-        // Output to console and file in same format
-        cout << GetMonthName(month) << ","
-             << fixed << setprecision(1)
-             << avgWind << "(" << sdWind << "," << madWind << "),"
-             << avgTemp << "(" << sdTemp << "," << madTemp <<  "),"
-             << totalkWhm2 << endl;
-
-        ofile << GetMonthName(month) << ","
-              << fixed << setprecision(1)
-              << avgWind << "(" << sdWind << " " << madWind << "),"
-              << avgTemp << "(" << sdTemp << "" << madTemp <<  "),"
-              << totalkWhm2 << endl;
-    }
-
-    // Handle case where no data exists for the specified year
-    if (!dataLoaded)
+    if(!inventory.Contains(year))
     {
         cout << "No Data" << endl;
         ofile << "No Data" << endl;
+        return;
     }
-    else
+
+    const Map<int, Bst<WeatherRecord>>& monthMap = inventory.At(year);
+
+    Vector<double> windSpeeds;
+    Vector<double> ambientTemps;
+    Vector<double> solarRad;
+
+    // Iterate through all 12 months
+    for (int month = 1; month <= 12; month++)
+    {
+        collector.clear();
+
+        if(monthMap.Contains(month))
+        {
+            const Bst<WeatherRecord>& monthBst = monthMap.At(month);
+
+            monthBst.InOrder(CollectU::CollectWindSpeed);
+            windSpeeds = collector.GetCollection();
+
+            collector.clear();
+
+            monthBst.InOrder(CollectU::CollectAmbientTemp);
+            ambientTemps = collector.GetCollection();
+
+            collector.clear();
+
+            monthBst.InOrder(CollectU::CollectSolarRad);
+            solarRad = collector.GetCollection();
+
+            // Calculate wind speed statistics
+            double avgWind = math.CalculateMean(windSpeeds);
+            double sdWind = math.CalculateSD(windSpeeds, avgWind);
+            double madWind = math.CalculateMAD(windSpeeds);
+
+            // Calculate temperature statistics
+            double avgTemp = math.CalculateMean(ambientTemps);
+            double sdTemp = math.CalculateSD(ambientTemps, avgTemp);
+            double madTemp = math.CalculateMAD(ambientTemps);
+
+            // Calculate solar radiation total
+            double monthlySolarRadiationSum = 0.0;
+            for (int i = 0; i < solarRad.Size(); i++)
+            {
+                monthlySolarRadiationSum += solarRad[i];
+            }
+
+            // Convert to kWh/m^2 by dividing by 6000
+            double totalkWhm2 = monthlySolarRadiationSum / 6000;
+
+            // Output to console and file in same format
+            cout << GetMonthName(month) << ","
+                 << fixed << setprecision(1)
+                 << avgWind << "(" << sdWind << "," << madWind << "),"
+                 << avgTemp << "(" << sdTemp << "," << madTemp <<  "),"
+                 << totalkWhm2 << endl;
+
+            ofile << GetMonthName(month) << ","
+                  << fixed << setprecision(1)
+                  << avgWind << "(" << sdWind << " " << madWind << "),"
+                  << avgTemp << "(" << sdTemp << "" << madTemp <<  "),"
+                  << totalkWhm2 << endl;
+
+            dataLoaded = true;
+        }
+    }
+
+    // Handle case where no data exists for the specified year
+    if (dataLoaded)
     {
         cout << "\nData successfully exported to: " << exportFileName << endl;
     }
 
     cout << endl;
-}*/
+}
