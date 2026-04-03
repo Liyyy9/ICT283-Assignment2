@@ -5,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #include "Time.h"
@@ -15,25 +15,18 @@ using std::endl;
 
 // Default Constructor
 // Initialises time to 12:30
-Time::Time()
-{
-    m_hour = 12;
-    m_mins = 30;
-}
+// Using member initialisation list to fix -Weffc++ warnings
+Time::Time() : m_hour(12), m_mins(30){}
 
 // Parameterised Constructor
 // Initialises time with the provided hour and minute values
 Time::Time(int hour, int mins)
+     : m_hour(12), m_mins(30)        // Fix -Weffc++ warnings
 {
     if (IsValidTime(hour, mins))
     {
         m_hour = hour;
         m_mins = mins;
-    }
-    else
-    {
-        m_hour = 12;
-        m_mins = 30;
     }
 }
 

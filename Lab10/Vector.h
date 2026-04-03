@@ -1,4 +1,3 @@
-
 // ===============================================================
 // Vector.h
 //      Template vector class for dynamic array management
@@ -6,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #ifndef VECTOR_H_INCLUDED
@@ -41,7 +40,7 @@ public:
      *
      * @return void
      */
-    Vector() {};
+    Vector() : m_vector() {};
 
     /**
      * @brief Parameterised constructor - initialises vector with specified size

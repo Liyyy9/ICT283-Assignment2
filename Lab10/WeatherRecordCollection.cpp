@@ -13,7 +13,8 @@
 #include "Map.h"
 
 // Default constructor implementation
-WeatherRecordCollection::WeatherRecordCollection() {}
+// Using member initialisation list to fix -Weffc++ warnings
+WeatherRecordCollection::WeatherRecordCollection() : m_inventory() {}
 
 // Hierarchical Insert implementation
 void WeatherRecordCollection::Insert(const WeatherRecord &record)

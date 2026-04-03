@@ -114,7 +114,8 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
 
             // Go through each character in the line
             // When we hit a comma or end of line, save the field
-            for (int i = 0; i <= (int)line.length(); i++)
+            // Change int to size_t to satisfy -Wsign-compare warning
+            for (size_t i = 0; i <= line.length(); i++)
             {
                 if (i == line.length() || line[i] == COMMA_DELIMITER)
                 {

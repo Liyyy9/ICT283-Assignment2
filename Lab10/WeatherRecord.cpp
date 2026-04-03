@@ -5,23 +5,20 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #include "WeatherRecord.h"
 
 // Default Constructor
 // Initialises speed to 0.0f, ambTemp to 0.0f, and solarRad to 0
-WeatherRecord::WeatherRecord()
-{
-    speed = 0.0f;
-    ambTemp = 0.0f;
-    solarRad = 0;
-}
+// Using member initialisation list to fix -Weffc++ warnings
+WeatherRecord::WeatherRecord() : d(1,1,1800), t(12,30), speed(0.0f), ambTemp(0.0f), solarRad(0){}
 
 // Parameterised Constructor
 // Initialises with provided date, time, speed, ambient temperature, and solar radiation values
 WeatherRecord::WeatherRecord(const Date &date, const Time &time, float s, float amb, int sr)
+    : d(1,1,1800), t(12,30), speed(0.0f), ambTemp(0.0f), solarRad(0)        // Fix -Weffc++ warnings
 {
     d = date;
     t = time;

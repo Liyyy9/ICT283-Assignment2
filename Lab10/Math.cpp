@@ -5,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #include <cmath>
@@ -67,7 +67,7 @@ double Math::CalculateSD(const Vector<double> &data, double mean)
 double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
 {
     // Check if size between two vectors are the same
-    if(v1.Size() != v2.Size() || v1.Size() == 0)
+    if(v1.Size() != v2.Size() || v1.Size() < 1)
     {
         return 0.0;
     }
@@ -110,7 +110,7 @@ double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
     // part 8: sqrt part 6 * part 7
     denominator = sqrt(sumXDiffSq * sumYDiffSq);
 
-    if(denominator == 0)
+    if(denominator <= 0)
     {
         return 0.0;
     }

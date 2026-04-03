@@ -44,10 +44,10 @@ void Sort::Split(int low, int high, Vector<WeatherRecord>& records, int& pivotIn
         if(records[j] < pValue || records[j] == pValue)
         {
             i++;
-            WeatherRecord tempRecord;
-            tempRecord = records[i];
+            WeatherRecord temp;
+            temp = records[i];
             records[i] = records[j];
-            records[j] = tempRecord;
+            records[j] = temp;
         }
     }
 

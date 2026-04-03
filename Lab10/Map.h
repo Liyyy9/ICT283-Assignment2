@@ -1,3 +1,12 @@
+// ===============================================================
+// Map.h
+//      Template class for Map
+//
+// Student: Liyana Afiqah Binte Jazmi
+// Student ID: 35849414
+// Project: ICT283 - Assignment 2
+// ===============================================================
+
 #ifndef MAP_H_INCLUDED
 #define MAP_H_INCLUDED
 
@@ -9,7 +18,7 @@ using std::map;
 //---------------------------------------------------------------------------------
 /**
  * @class Map
- * @brief Wrapper for std::map providing minimal inteface for Year/Month indexing
+ * @brief Wrapper for std::map providing minimal interface for Year/Month indexing
  *
  * Generic template class that manages a dynamic array of type T.
  * Supports insertion and removal of elements at any position.
@@ -34,7 +43,7 @@ public:
     /**
      * @brief Default constructor - initialises
      */
-    Map() {};
+    Map() : m_data() {};
 
     /**
      * @brief Access or insert an element.

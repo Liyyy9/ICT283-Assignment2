@@ -5,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 09
+// Project: ICT283 - Assignment 2
 // ===============================================================
 #include "Date.h"
 #include "Utilities.h"
@@ -14,28 +14,20 @@ using std::cout;
 
 // Default Constructor
 // Initialises date to 1/1/1800
-Date::Date()
-{
-    m_day = 1;
-    m_month = 1;
-    m_year = 1800;
-}
+// Using member initialisation list to fix -Weffc++ warnings
+Date::Date() : m_day(1), m_month(1), m_year(1800) {}
 
 // Parameterised Constructor
 // Initialises date with the provided day, month, and year values
 Date::Date(int day, int month, int year)
+    : m_day(1), m_month(1), m_year(1800)        // Fix -Weffc++ warnings
 {
     if(IsValidDate(day, month, year))
     {
         m_day = day;
         m_month = month;
         m_year = year;
-    } else {
-        m_day = 1;
-        m_month = 1;
-        m_year = 1800;
     }
-
 }
 
 // Getter: Returns the day value

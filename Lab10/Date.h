@@ -5,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 09
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #ifndef DATE_H_INCLUDED

@@ -5,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 08
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #include "CSVHeaderReader.h"
@@ -37,7 +37,8 @@ bool CSVHeaderReader::ReadHeader(ifstream &infile, int &dateTimeIndex, int &spee
     string token = "";
     int colIndex = 0;
 
-    for (int i = 0; i <= (int)headerLine.length(); i++)
+    // Change int to size_t to satisfy -Wsign-compare warning
+    for (size_t i = 0; i <= headerLine.length(); i++)
     {
         if (i == headerLine.length() || headerLine[i] == COMMA_DELIMITER)
         {

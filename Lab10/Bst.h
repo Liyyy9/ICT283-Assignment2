@@ -1,3 +1,13 @@
+// ===============================================================
+// Bst.h
+//      Template Binary Search Tree (BST) class
+//      Provides ordered storage, search, and traversal operations
+//
+// Student: Liyana Afiqah Binte Jazmi
+// Student ID: 35849414
+// Project: ICT283 - Assignment 2
+// ===============================================================
+
 #ifndef BST_H_INCLUDED
 #define BST_H_INCLUDED
 
@@ -87,9 +97,12 @@ private:
          T data;          /// Data value stored in this node
          Node *left;      /// Pointer to left child
          Node *right;     /// Pointer to right child
+
+         // Using constructor with member initialisation list to fix -Weffc++ warnings
+         Node(const T& value) : data(value), left(nullptr), right(nullptr) {}
     };
 
-    Node *root;  /// Pointer to root of the BST
+    Node *m_root;  /// Pointer to root of the BST
 
     /**
      * @brief Recursive helper method to insert a value into the BST
@@ -156,7 +169,7 @@ private:
 template <class T>
 Bst<T>::Bst()
 {
-    root = 0;
+    m_root = nullptr;
 }
 
 // Destructor: Clean up all dynamically allocated nodes
@@ -170,7 +183,7 @@ Bst<T>::~Bst()
 template <class T>
 Bst<T>::Bst(const Bst<T>& other)
 {
-    root = copyTree(other.root);
+    m_root = copyTree(other.m_root);
 }
 
 // Assignment Operator: Replace contents with a deep copy of another tree
@@ -180,7 +193,7 @@ Bst<T>& Bst<T>::operator=(const Bst<T>& other)
     if(this != &other)
     {
         Clear();  // Delete current tree
-        root = copyTree(other.root);  // Copy other tree
+        m_root = copyTree(other.m_root);  // Copy other tree
     }
 
     return *this;
@@ -190,49 +203,49 @@ Bst<T>& Bst<T>::operator=(const Bst<T>& other)
 template <class T>
 void Bst<T>::Insert(const T& value)
 {
-   root = insert(root, value);
+   m_root = insert(m_root, value);
 }
 
 // Public Search: Wrapper that searches for a value in the BST
 template <class T>
 bool Bst<T>::Search(const T& value) const
 {
-    return search(root, value);
+    return search(m_root, value);
 }
 
 // Public InOrder: Wrapper for in-order traversal (Left-Root-Right)
 template <class T>
 void Bst<T>::InOrder(void (*pf)(const T&)) const
 {
-    inOrder(root, pf);
+    inOrder(m_root, pf);
 }
 
 // Public PreOrder: Wrapper for pre-order traversal (Root-Left-Right)
 template <class T>
 void Bst<T>::PreOrder(void (*pf)(const T&)) const
 {
-    preOrder(root, pf);
+    preOrder(m_root, pf);
 }
 
 // Public PostOrder: Wrapper for post-order traversal (Left-Right-Root)
 template <class T>
 void Bst<T>::PostOrder(void (*pf)(const T&)) const
 {
-    postOrder(root, pf);
+    postOrder(m_root, pf);
 }
 
 // Public Clear: Delete all nodes from the tree
 template <class T>
 void Bst<T>::Clear()
 {
-    deleteTree(root);
+    deleteTree(m_root);
 }
 
 // Public IsValid: Validate that the tree satisfies BST invariant
 template <class T>
 bool Bst<T>::IsValid() const
 {
-    return checkInvariant(root, nullptr, nullptr);
+    return checkInvariant(m_root, nullptr, nullptr);
 }
 
 // ===============================================================
@@ -244,13 +257,10 @@ bool Bst<T>::IsValid() const
 template <class T>
 typename Bst<T>::Node* Bst<T>::insert(Node* tree, const T& value)
 {
-    if(tree == 0)
+    if(tree == nullptr)
     {
-        Node* newNode = new Node;
-        newNode->data = value;
-        newNode->left = 0;
-        newNode->right = 0;
-        return newNode;
+        // Using constructor
+        return new Node(value);
     }
 
     if(value < tree->data)
@@ -270,7 +280,7 @@ typename Bst<T>::Node* Bst<T>::insert(Node* tree, const T& value)
 template <class T>
 bool Bst<T>::search(Node* tree, const T& value) const
 {
-    if(tree == 0)  // Empty tree
+    if(tree == nullptr)  // Empty tree
     {
         return false;
     }
