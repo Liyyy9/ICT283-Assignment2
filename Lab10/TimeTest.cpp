@@ -28,7 +28,7 @@ int main()
 
     // -------- TEST 1: Default Constructor --------
     // Verify that default constructor initialises time to 12:30
-    cout << "--- Test 1 (Default Constructor) ---" << endl;
+    cout << "--- Test 1: Default Constructor ---" << endl;
     Time myTime;
     cout << "Constructed Default Time object: myTime" << endl
          << endl;
@@ -38,7 +38,7 @@ int main()
 
     // -------- TEST 2: Parameterised Constructor --------
     // Verify that parameterised constructor correctly initialises to provided values
-    cout << "--- Test 2 (Parameterised Constructor) ---" << endl;
+    cout << "--- Test 2: Parameterised Constructor ---" << endl;
     Time myTime2(14, 45);
     cout << "Constructed Parameterised Time object: myTime2(14, 45)" << endl
          << endl;
@@ -48,7 +48,7 @@ int main()
 
     // -------- TEST 3: Invalid Time Defaults to 12:30 --------
     // Verify that invalid time values default to 12:30
-    cout << "--- Test 3 (Invalid Time Defaults to 12:30) ---" << endl;
+    cout << "--- Test 3: Invalid Time Defaults to 12:30 ---" << endl;
     Time myTime3(25, 61);
     cout << "Constructed Time object with invalid values: myTime3(25, 61)" << endl
          << endl;
@@ -58,7 +58,7 @@ int main()
 
     // -------- TEST 4: Setters --------
     // Verify that setter methods correctly update time values
-    cout << "--- Test 4 (Setters) ---" << endl;
+    cout << "--- Test 4: Setters ---" << endl;
     Time myTime4;
     myTime4.SetHour(9);
     myTime4.SetMins(30);
@@ -70,7 +70,7 @@ int main()
 
     // -------- TEST 5: Output Stream Operator --------
     // Verify that output displays time in correct format HH:MM
-    cout << "--- Test 5 (Output Stream Operator) ---" << endl;
+    cout << "--- Test 5: Output Stream Operator ---" << endl;
     Time myTime5(9, 5);
     cout << "Created Time object: myTime5(9, 5)" << endl;
     cout << "Output: " << myTime5 << endl
