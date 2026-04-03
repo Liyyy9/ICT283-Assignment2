@@ -78,8 +78,7 @@ void MenuHandler::HandleChoice(int choice, const WeatherRecordCollection &data)
 
     case 3:
         // Choice 3: Display sPCC combinations for specified month of all years
-        cout << "Enter month: ";
-        cin >> month;
+        month = ValidMonthInput(month);
 
         cout << endl;
 
