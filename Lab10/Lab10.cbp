@@ -32,13 +32,13 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Bst.h" />
-		<Unit filename="BstTest.cpp" />
-		<Unit filename="CSVHeaderReader.cpp" />
-		<Unit filename="CSVHeaderReader.h" />
-		<Unit filename="CSVHeaderReaderTest.cpp">
+		<Unit filename="BstTest.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="CSVHeaderReader.cpp" />
+		<Unit filename="CSVHeaderReader.h" />
+		<Unit filename="CSVHeaderReaderTest.cpp" />
 		<Unit filename="CSVLoader.cpp" />
 		<Unit filename="CSVLoader.h" />
 		<Unit filename="CSVLoaderTest.cpp">

@@ -31,7 +31,7 @@ int main()
 
     // -------- TEST 1: Valid CSV Header with All Required Columns --------
     // Verify reading a valid CSV header with WAST, S, T, and SR columns
-    cout << "--- Test 1 (Valid CSV Header with All Required Columns) ---" << endl;
+    cout << "--- Test 1: Valid CSV Header with All Required Columns ---" << endl;
 
     ofstream testFile1("CSVheader_testfile1.csv");
     testFile1 << "WAST,S,T,SR" << endl;
@@ -55,7 +55,7 @@ int main()
 
     // -------- TEST 2: CSV Header with Columns in Different Order --------
     // Verify correct column index identification regardless of order
-    cout << "--- Test 2 (CSV Header with Columns in Different Order) ---" << endl;
+    cout << "--- Test 2: CSV Header with Columns in Different Order ---" << endl;
     ofstream testFile2("CSVheader_testfile2.csv");
     testFile2 << "S,WAST,SR,T" << endl;
     testFile2.close();
@@ -78,7 +78,7 @@ int main()
 
     // -------- TEST 3: CSV Header with Extra Columns --------
     // Verify correct identification of required columns with extra columns present
-    cout << "--- Test 3 (CSV Header with Extra Columns) ---" << endl;
+    cout << "--- Test 3: CSV Header with Extra Columns ---" << endl;
     ofstream testFile3("CSVheader_testfile3.csv");
     testFile3 << "WAST,ExtraCol1,S,ExtraCol2,T,SR,ExtraCol3" << endl;
     testFile3.close();
