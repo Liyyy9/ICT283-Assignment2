@@ -11,6 +11,9 @@
 #include "CSVLoader.h"
 #include "WeatherRecordCollection.h"
 #include "Utilities.h"
+#include "Map.h"
+#include "Bst.h"
+
 #include <iostream>
 #include <string>
 
@@ -29,62 +32,42 @@ int main()
 
     // -------- TEST 1: Successful CSV Load --------
     // Verify that CSV file loads successfully and returns non-empty collection
-    cout << "--- Test 1 (Successful CSV Load) ---" << endl;
+    cout << "--- Test 1: Successful CSV Load ---" << endl;
     CSVLoader loader;
     WeatherRecordCollection weather_data = loader.LoadAllCSV();
 
-    AssertEqual("Collection is not empty", weather_data.Size() > 0, passCount, failCount);
+    AssertEqual("Collection is not empty", weather_data.GetYearCount() > 0, passCount, failCount);
     cout << endl;
 
-    // -------- TEST 2: Record Data Integrity --------
-    // Verify that loaded records contain valid data
-    cout << "--- Test 2 (Record Data Integrity) ---" << endl;
+    // -------- TEST 2: Data Integrity via Search --------
+    cout << "--- Test 2: Data Integrity via Search ---" << endl;
 
-    bool hasValidDate = false;
-    bool hasValidSpeed = false;
-    bool hasValidTemp = false;
-    bool hasValidSolarRad = false;
+    bool foundRecord = false;
 
-    // Check first record for data validity
-    if (weather_data.Size() > 0)
+    if(weather_data.GetYearCount() > 0)
     {
-        WeatherRecord firstRecord = weather_data[0];
+        const WeatherRecordCollection::YearCabinet& inventory = weather_data.GetInventory();
 
-        // Check date validity (should be between 2014-2016 for this dataset)
-        hasValidDate = (firstRecord.GetDate().GetYear() >= 2014 && firstRecord.GetDate().GetYear() <= 2016);
+        int testYear = 2007;
+        int testMonth = 2;
 
-        // Check speed validity (realistic wind speed: 0-25 m/s)
-        hasValidSpeed = (firstRecord.GetSpeed() >= 0 && firstRecord.GetSpeed() <= 25);
+        if(inventory.Contains(testYear) && inventory.At(testYear).Contains(testMonth))
+        {
+            const WeatherRecordCollection::RecordFolder& recordFolder = inventory.At(testYear).At(testMonth);
 
-        // Check temperature validity (realistic ambient temp: -10 to 50 degrees C)
-        hasValidTemp = (firstRecord.GetAmbTemp() >= -10 && firstRecord.GetAmbTemp() <= 50);
+            WeatherRecord target;
 
-        // Check solar radiation validity (realistic: 0-1000)
-        hasValidSolarRad = (firstRecord.GetSolarRad() >= 0 && firstRecord.GetSolarRad() <= 1000);
+            Date date(25,2,2007);
+            Time time(22,10);
+            target.SetDate(date);
+            target.SetTime(time);
+
+            foundRecord = recordFolder.Search(target);
+        }
     }
 
-    AssertEqual("First record has valid date", hasValidDate, passCount, failCount);
-    AssertEqual("First record has valid wind speed", hasValidSpeed, passCount, failCount);
-    AssertEqual("First record has valid ambient temperature", hasValidTemp, passCount, failCount);
-    AssertEqual("First record has valid solar radiation", hasValidSolarRad, passCount, failCount);
-    cout << endl;
+    AssertEqual("Specific record found in BST", foundRecord, passCount, failCount);
 
-    // -------- TEST 3: Time Information --------
-    // Verify that time information is loaded correctly
-    cout << "--- Test 3 (Time Information Loading) ---" << endl;
-
-    bool hasValidHour = false;
-    bool hasValidMinutes = false;
-
-    if (weather_data.Size() > 0)
-    {
-        WeatherRecord firstRecord = weather_data[0];
-        hasValidHour = (firstRecord.GetTime().GetHour() >= 0 && firstRecord.GetTime().GetHour() <= 23);
-        hasValidMinutes = (firstRecord.GetTime().GetMins() >= 0 && firstRecord.GetTime().GetMins() <= 59);
-    }
-
-    AssertEqual("First record has valid hour", hasValidHour, passCount, failCount);
-    AssertEqual("First record has valid minutes", hasValidMinutes, passCount, failCount);
     cout << endl;
 
     // -------- Summary --------
@@ -93,8 +76,6 @@ int main()
     cout << "Total Failed: " << failCount << endl;
     cout << "       Total: " << (passCount + failCount) << endl
          << endl;
-
-    cout << "Total records loaded: " << weather_data.Size() << endl << endl;
 
     cout << "==== End of CSVLoader Test Cases ====" << endl;
 

@@ -38,13 +38,13 @@
 		</Unit>
 		<Unit filename="CSVHeaderReader.cpp" />
 		<Unit filename="CSVHeaderReader.h" />
-		<Unit filename="CSVHeaderReaderTest.cpp" />
-		<Unit filename="CSVLoader.cpp" />
-		<Unit filename="CSVLoader.h" />
-		<Unit filename="CSVLoaderTest.cpp">
+		<Unit filename="CSVHeaderReaderTest.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="CSVLoader.cpp" />
+		<Unit filename="CSVLoader.h" />
+		<Unit filename="CSVLoaderTest.cpp" />
 		<Unit filename="CollectU.cpp" />
 		<Unit filename="CollectU.h">
 			<Option target="&lt;{~None~}&gt;" />
