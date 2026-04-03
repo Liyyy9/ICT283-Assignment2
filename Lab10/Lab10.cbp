@@ -76,13 +76,13 @@
 		</Unit>
 		<Unit filename="Math.cpp" />
 		<Unit filename="Math.h" />
-		<Unit filename="MathTest.cpp" />
-		<Unit filename="MenuHandler.cpp" />
-		<Unit filename="MenuHandler.h" />
-		<Unit filename="MenuHandlerTest.cpp">
+		<Unit filename="MathTest.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="MenuHandler.cpp" />
+		<Unit filename="MenuHandler.h" />
+		<Unit filename="MenuHandlerTest.cpp" />
 		<Unit filename="Sort.cpp" />
 		<Unit filename="Sort.h">
 			<Option target="&lt;{~None~}&gt;" />
