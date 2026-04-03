@@ -51,7 +51,7 @@ int main()
          << endl;
 
     // -------- TEST 1: Basic Insertion and Invariant --------
-    cout << "--- Test 1 (Insertion & Invariant) ---" << endl;
+    cout << "--- Test 1: Insertion & Invariant ---" << endl;
     Bst<Date> tree;
     Date dRoot(15, 5, 2020);
     Date dLeft(10, 5, 2020);
@@ -65,14 +65,14 @@ int main()
     cout << endl;
 
     // -------- TEST 2: Search Logic --------
-    cout << "--- Test 2 (Search Logic) ---" << endl;
+    cout << "--- Test 2: Search Logic ---" << endl;
     Date missingDate(1, 1, 1999);
     AssertEqual("Search: Found existing element", tree.Search(dLeft), passCount, failCount);
     AssertEqual("Search: Correctly missed non-existent element", tree.Search(missingDate) == false, passCount, failCount);
     cout << endl;
 
     // -------- TEST 3: Multiple Traversals (Function Pointers) --------
-    cout << "--- Test 3 (Traversals: In, Pre, Post) ---" << endl;
+    cout << "--- Test 3: Traversals: In, Pre, Post ---" << endl;
     cout << "InOrder (Expected: 10/05/2020 15/05/2020 20/05/2020): " << endl << "   Actual: ";
     tree.InOrder(SimplePrint);
 
@@ -84,7 +84,7 @@ int main()
     cout << endl << endl;
 
     // -------- TEST 4: Data Collection via Static Callback --------
-    cout << "--- Test 4 (CollectU collection via static callback) ---" << endl;
+    cout << "--- Test 4: CollectU collection via static callback ---" << endl;
     testDateStorage.Clear();
     tree.InOrder(CollectDate);
 
@@ -93,7 +93,7 @@ int main()
     cout << endl;
 
     // -------- TEST 5: Deep Copy & Pass-by-Value --------
-    cout << "--- Test 5 (Copy Constructor & Scope) ---" << endl;
+    cout << "--- Test 5: Deep Copy Constructor & Scope ---" << endl;
     TestPassByValue(tree, dRoot, passCount, failCount);
 
     Bst<Date> copyTree = tree;
@@ -104,7 +104,7 @@ int main()
     cout << endl;
 
     // -------- TEST 6: Assignment Operator --------
-    cout << "--- Test 6 (Assignment Operator) ---" << endl;
+    cout << "--- Test 6: Assignment Operator ---" << endl;
     Bst<Date> assignedTree;
     assignedTree = tree;
     AssertEqual("Assigned tree is valid", assignedTree.IsValid(), passCount, failCount);

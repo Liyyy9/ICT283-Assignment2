@@ -32,10 +32,7 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Bst.h" />
-		<Unit filename="BstTest.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
+		<Unit filename="BstTest.cpp" />
 		<Unit filename="CSVHeaderReader.cpp" />
 		<Unit filename="CSVHeaderReader.h" />
 		<Unit filename="CSVHeaderReaderTest.cpp">
@@ -52,7 +49,10 @@
 		<Unit filename="CollectU.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="CollectUTest.cpp" />
+		<Unit filename="CollectUTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Constants.h" />
 		<Unit filename="Date.cpp" />
 		<Unit filename="Date.h" />
