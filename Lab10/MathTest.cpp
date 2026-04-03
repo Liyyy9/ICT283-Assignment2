@@ -42,7 +42,7 @@ int main()
          << endl;
 
     // -------- TEST 1: CalculateMean --------
-    cout << "--- Test 1 (CalculateMean - Basic Data) ---" << endl;
+    cout << "--- Test 1: CalculateMean - Basic Data ---" << endl;
     Vector<double> v1;
     v1.Add(10.0);
     v1.Add(20.0);
@@ -55,7 +55,7 @@ int main()
     cout << endl;
 
     // -------- TEST 2: CalculateMean - Empty Vector --------
-    cout << "--- Test 2 (CalculateMean - Multiple Records) ---" << endl;
+    cout << "--- Test 2: CalculateMean - Multiple Records ---" << endl;
     Vector<double> emptyVec;
     double meanEmpty = math.CalculateMean(emptyVec);
 
@@ -65,7 +65,7 @@ int main()
 
     // -------- TEST 3: CalculateSD - Two Records --------
     // Verify standard deviation calculation with two records
-    cout << "--- Test 3 (CalculateSD - Two Records) ---" << endl;
+    cout << "--- Test 3: CalculateSD - Two Records ---" << endl;
     Vector<double> v2;
     v2.Add(10.0);
     v2.Add(20.0);
@@ -78,7 +78,7 @@ int main()
 
     // -------- TEST 4: CalculateSD - Single Record --------
     // Verify standard deviation with single record (should return 0.0)
-    cout << "--- Test 4 (CalculateSD - Single Record) ---" << endl;
+    cout << "--- Test 4: CalculateSD - Single Record ---" << endl;
     Vector<double> v3;
     v3.Add(50.0);
 
@@ -89,7 +89,7 @@ int main()
 
     // -------- TEST 5: sPCC - Perfect Positive Correlation --------
     // Verify sPCC returns ~1.0 for perfectly correlated data
-    cout << "--- Test 5 (sPCC - Perfect Positive) ---" << endl;
+    cout << "--- Test 5: sPCC - Perfect Positive ---" << endl;
     Vector<double> v4;
     Vector<double> v5;
 
@@ -105,7 +105,7 @@ int main()
 
     // -------- TEST 6: sPCC - Perfect Negative Correlation --------
     // Verify sPCC returns ~-1.0 for inversely correlated data
-    cout << "--- Test 6 (sPCC - Perfect Negative) ---" << endl;
+    cout << "--- Test 6: sPCC - Perfect Negative ---" << endl;
     Vector<double> v6;
     for(int i = 1; i <= 5; i++) {
         v6.Add(static_cast<double>(60 - (i * 10))); // {50, 40, 30, 20, 10}
@@ -117,7 +117,7 @@ int main()
 
     // -------- TEST 7: sPCC - Size Mismatch --------
     // Verify sPCC handles vectors of different lengths (should return 0.0 or handle error)
-    cout << "--- Test 7 (sPCC - Size Mismatch) ---" << endl;
+    cout << "--- Test 7: sPCC - Size Mismatch ---" << endl;
     v6.Add(100.0);                                  // Make v6 size 6, v4 is size 5
 
     double result7 = math.CalculateSPCC(v4, v6);
@@ -128,7 +128,7 @@ int main()
     // -------- TEST 8: MAD - Mean Absolute Deviation --------
     // Verify MAD calculation: Mean of {10, 20, 30} is 20.
     // Abs: |10-20|=10, |20-20|=0, |30-20|=10. Mean of {10, 0, 10} = 6.67
-    cout << "--- Test 8 (CalculateMAD) ---" << endl;
+    cout << "--- Test 8: CalculateMAD ---" << endl;
     Vector<double> vMAD;
     vMAD.Add(10.0);
     vMAD.Add(20.0);
