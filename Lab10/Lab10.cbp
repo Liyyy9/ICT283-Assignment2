@@ -82,7 +82,10 @@
 		</Unit>
 		<Unit filename="MenuHandler.cpp" />
 		<Unit filename="MenuHandler.h" />
-		<Unit filename="MenuHandlerTest.cpp" />
+		<Unit filename="MenuHandlerTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Sort.cpp" />
 		<Unit filename="Sort.h">
 			<Option target="&lt;{~None~}&gt;" />
@@ -99,10 +102,7 @@
 		</Unit>
 		<Unit filename="Utilities.cpp" />
 		<Unit filename="Utilities.h" />
-		<Unit filename="UtilitiesTest.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
+		<Unit filename="UtilitiesTest.cpp" />
 		<Unit filename="Vector.h" />
 		<Unit filename="VectorTest.cpp">
 			<Option compile="0" />
