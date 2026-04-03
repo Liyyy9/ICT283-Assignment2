@@ -11,6 +11,8 @@
 #include "CollectU.h"
 #include "Date.h"
 #include "Utilities.h"
+#include "Vector.h"
+
 #include <iostream>
 
 using std::cout;
@@ -27,42 +29,99 @@ int main()
     CollectU collector;
 
     // -------- TEST 1: Initial State --------
-    cout << "--- Test 1 (Initial State) ---" << endl;
+    cout << "--- Test 1: Initial State ---" << endl;
     AssertEqual("Initial size should be 0", collector.size() == 0, passCount, failCount);
     cout << endl;
 
-    // -------- TEST 2: Static Collection (Simulating BST Callback) --------
-    cout << "--- Test 2 (Collect Logic) ---" << endl;
-    Date d1(1, 1, 2020);
-    Date d2(15, 6, 2021);
+    // -------- TEST 2: Static Collection - CollectWindSpeed --------
+    cout << "--- Test 2: Collect Logic (CollectWindSpeed) ---" << endl;
+    WeatherRecord record1;
+    WeatherRecord record2;
+    WeatherRecord record3;
+    WeatherRecord record4;
+    WeatherRecord record5;
 
-    // BST callback
-    CollectU::Collect(d1);
-    CollectU::Collect(d2);
+    record1.SetSpeed(5.0);
+    record2.SetSpeed(6.0);
+    record3.SetSpeed(3.0);
+    record4.SetSpeed(4.0);
+    record5.SetSpeed(6.0);
 
-    AssertEqual("Size after 2 collections should be 2", collector.size() == 2, passCount, failCount);
+    CollectU::CollectWindSpeed(record1);
+    CollectU::CollectWindSpeed(record2);
+    CollectU::CollectWindSpeed(record3);
+    CollectU::CollectWindSpeed(record4);
+    CollectU::CollectWindSpeed(record5);
+
+    AssertEqual("Size should be 5", collector.size() == 5, passCount, failCount);
     cout << endl;
 
-    // -------- TEST 3: Access via Operator[] --------
-    cout << "--- Test 3 (Operator[]) ---" << endl;
-    Date retrieved = collector[0];
-    cout << "Expected: " << d1 << " | Retrieved: " << retrieved << endl;
+    // -------- TEST 3: Static Collection - CollectAmbientTemp --------
+    cout << "--- Test 3: Collect Logic (CollectAmbientTemp) ---" << endl;
+    collector.clear();
+
+    record1.SetAmbTemp(30.4);
+    record2.SetAmbTemp(30.4);
+    record3.SetAmbTemp(30.4);
+    record4.SetAmbTemp(30.4);
+    record5.SetAmbTemp(30.4);
+
+    CollectU::CollectAmbientTemp(record1);
+    CollectU::CollectAmbientTemp(record2);
+    CollectU::CollectAmbientTemp(record3);
+    CollectU::CollectAmbientTemp(record4);
+    CollectU::CollectAmbientTemp(record5);
+
+    AssertEqual("Size should be 5", collector.size() == 5, passCount, failCount);
+    cout << endl;
+
+    // -------- TEST 4: Static Collection - CollectSolarRad --------
+    cout << "--- Test 4: Collect Logic (CollectSolarRad) ---" << endl;
+    collector.clear();
+
+    record1.SetSolarRad(100);
+    record2.SetSolarRad(100);
+    record3.SetSolarRad(100);
+    record4.SetSolarRad(100);
+    record5.SetSolarRad(100);
+
+    CollectU::CollectSolarRad(record1);
+    CollectU::CollectSolarRad(record2);
+    CollectU::CollectSolarRad(record3);
+    CollectU::CollectSolarRad(record4);
+    CollectU::CollectSolarRad(record5);
+
+    AssertEqual("Size should be 5", collector.size() == 5, passCount, failCount);
+    cout << endl;
+
+   // -------- TEST 5: Access via Operator[] --------
+    cout << "--- Test 5: Operator[] ---" << endl;
+    int retrieved = collector[0];
+    cout << "Expected: " << record1.GetSolarRad() << " | Retrieved: " << retrieved << endl;
 
     // Check if the first collected date matches
-    AssertEqual("First element should be 01 January 2020",
-                (retrieved.GetDay() == 1 && retrieved.GetYear() == 2020),
-                passCount, failCount);
+    AssertEqual("First element should be 100",(retrieved == 100), passCount, failCount);
     cout << endl;
 
-    // -------- TEST 4: Static Persistence Test --------
-    cout << "--- Test 4 (Static Persistence) ---" << endl;
+    // -------- TEST 6: Static Persistence Test --------
+    cout << "--- Test 6: Static Persistence ---" << endl;
     CollectU secondCollector;
-    AssertEqual("New object instance should still see size 2",
-                secondCollector.size() == 2, passCount, failCount);
+    AssertEqual("New object instance should still see size 5",
+                secondCollector.size() == 5, passCount, failCount);
     cout << endl;
 
-    // -------- TEST 5: Clear Logic --------
-    cout << "--- Test 5 (Clear) ---" << endl;
+    // -------- TEST 7: Size --------
+    cout << "--- Test 7: Size() ---" << endl;
+    WeatherRecord record6;
+    record6.SetSolarRad(200);
+
+    CollectU::CollectSolarRad(record6);
+
+    AssertEqual("Size should be 6 after adding", collector.size() == 6, passCount, failCount);
+    cout << endl;
+
+    // -------- TEST 8: Clear Logic --------
+    cout << "--- Test 8: Clear() ---" << endl;
     collector.clear();
     AssertEqual("Size after clear should be 0", collector.size() == 0, passCount, failCount);
 
