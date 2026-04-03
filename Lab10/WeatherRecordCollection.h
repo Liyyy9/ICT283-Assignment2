@@ -33,6 +33,9 @@
  *
  * @version 03
  * @date 03/03/2026 Liyana Afiqah, Assignment 2: Implemented insertion via mid point of Vector
+ *
+ * @version 04
+ * @date 03/03/2026 Liyana Afiqah, Assignment 2: Refactored to use typedef
  */
  //-------------------------------------------------------------------------------------------
 
@@ -40,6 +43,21 @@ class WeatherRecordCollection
 {
 
 public:
+    /**
+     * @name Data Hierarchy Type Definitions
+     * @brief Definitions that map the nested storage structure to a physical filing system analogy.
+     *
+     * * The hierarchy is organized as follows:
+     * - **YearCabinet (Outer Map): Represents the entire filing cabinet, where each "Drawer" is indexed by a Year (int).
+     * - **MonthDrawer (Inner Map): Represents a single year's drawer, containing 12 "Folders" indexed by Month (int).
+     * - **RecordFolder (BST):Represents a specific month's folder. It stores individual WeatherRecord "files"
+     * sorted by the BST's internal ordering (Date/Time).
+     *
+     */
+    typedef Bst<WeatherRecord> RecordFolder;
+    typedef Map<int, RecordFolder> MonthDrawer;
+    typedef Map<int, MonthDrawer> YearCabinet;
+
     /**
      * @brief Default constructor - initialises empty collection
      */
@@ -76,7 +94,7 @@ public:
      *
      * @return const map reference to the inventory
      */
-     const Map<int, Map<int, Bst<WeatherRecord>>>& GetInventory() const;
+     const YearCabinet& GetInventory() const;
 
 private:
 
@@ -88,7 +106,7 @@ private:
      * Inner Map Key (int): The Month (acting as a 'folder').
      * Value: A BST containing WeatherRecord objects for that specific month and year.
      */
-    Map<int, Map<int, Bst<WeatherRecord>>> m_inventory;
+    YearCabinet m_inventory;
 };
 
 #endif // WEATHERRECORDCOLLECTION_H_INCLUDED

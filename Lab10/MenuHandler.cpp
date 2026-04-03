@@ -36,7 +36,8 @@ void MenuHandler::ShowMenu() const
     cout << "1. Average wind speed and standard deviation for this wind speed for a specified month and year." << endl;
     cout << "2. Average ambient air temperature and standard deviation for each month of a specified year." << endl;
     cout << "3. Sample Pearson Correlation Coefficient (sPCC) for all variables for a specified month" << endl;
-    cout << "4. Average wind speed (km/h), average ambient air temperature and total solar radiation in kWh/m^2 for each month of a specified year and export findings to WindTempSolar.csv." << endl;
+    cout << "4. Average speed (stdev, MAD), average ambient temperature (stdev, MAD), and total solar radiation\n"
+         << "   for each month of a specified year. (Exports to WindTempSolar.csv)" << endl;
     cout << "5. Exit program" << endl;
     cout << endl;
     cout << "==== End of Weather Data Menu ====" << endl
@@ -121,7 +122,7 @@ void MenuHandler::WindAvgStdDev_Choice1(int month, int year, const WeatherRecord
     collector.clear();
 
     // Retrieve the nested map structure
-    const Map<int, Map<int, Bst<WeatherRecord>>>& inventory = data.GetInventory();
+    const WeatherRecordCollection::YearCabinet& inventory = data.GetInventory();
 
     // Check if the specific year and month keys exist in the inventory
     if(inventory.Contains(year) && inventory.At(year).Contains(month))
@@ -161,7 +162,7 @@ void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordColl
     Math math;
     CollectU collector;
 
-    const Map<int, Map<int, Bst<WeatherRecord>>>& inventory = data.GetInventory();
+    const WeatherRecordCollection::YearCabinet inventory = data.GetInventory();
 
     cout << year << endl;
 
@@ -177,11 +178,11 @@ void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordColl
         // Ensure that storage is empty
         collector.clear();
 
-        const Map<int, Bst<WeatherRecord>>& monthMap = inventory.At(year);
+        const WeatherRecordCollection::MonthDrawer monthMap = inventory.At(year);
 
         if(monthMap.Contains(month))
         {
-            const Bst<WeatherRecord>& monthBst = monthMap.At(month);
+            const WeatherRecordCollection::RecordFolder& monthBst = monthMap.At(month);
 
             monthBst.InOrder(CollectU::CollectAmbientTemp);
 
@@ -216,7 +217,7 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
 {
     Math math;
     CollectU collector;
-    const Map<int, Map<int, Bst<WeatherRecord>>>& inventory = data.GetInventory();
+    const WeatherRecordCollection::YearCabinet& inventory = data.GetInventory();
 
     cout << "The combinations are:\n"
          << "\ta) S_T: Average Wind Speed (S) and Ambient Air Temperature (T)\n"
@@ -224,46 +225,37 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
          << "\tc) T_R: Ambient Air Temperature (T) and Solar Radiation (R)\n"
          << endl;
 
-    Vector<double> windS;
-    Vector<double> tempT;
+    Vector<double> windSpeeds;
+    Vector<double> ambTemps;
     Vector<double> solarR;
 
     collector.clear();
-    for(Map<int, Map<int, Bst<WeatherRecord>>>::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
+    for(WeatherRecordCollection::YearCabinet::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
     {
-        const Map<int, Bst<WeatherRecord>>& monthMap = it->second;
-        if(monthMap.Contains(month))
+        const WeatherRecordCollection::MonthDrawer& monthDrawer = it->second;
+        if(monthDrawer.Contains(month))
         {
-            monthMap.At(month).InOrder(CollectU::CollectWindSpeed);
+            const WeatherRecordCollection::RecordFolder& recordFolder = monthDrawer.At(month);
+
+            // Collect air speed
+            collector.clear();
+            recordFolder.InOrder(CollectU::CollectWindSpeed);
+            windSpeeds = collector.GetCollection();
+
+            // Collect ambient temperature
+            collector.clear();
+            recordFolder.InOrder(CollectU::CollectAmbientTemp);
+            ambTemps = collector.GetCollection();
+
+            // Collect ambient temperature
+            collector.clear();
+            recordFolder.InOrder(CollectU::CollectSolarRad);
+            solarR = collector.GetCollection();
         }
     }
-    windS = collector.GetCollection();
-
-    collector.clear();
-    for(Map<int, Map<int, Bst<WeatherRecord>>>::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
-    {
-        const Map<int, Bst<WeatherRecord>>& monthMap = it->second;
-        if(monthMap.Contains(month))
-        {
-            monthMap.At(month).InOrder(CollectU::CollectAmbientTemp);
-        }
-    }
-    tempT = collector.GetCollection();
-
-    collector.clear();
-    for(Map<int, Map<int, Bst<WeatherRecord>>>::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
-    {
-        const Map<int, Bst<WeatherRecord>>& monthMap = it->second;
-        if(monthMap.Contains(month))
-        {
-            monthMap.At(month).InOrder(CollectU::CollectSolarRad);
-        }
-    }
-    solarR = collector.GetCollection();
-
     cout << "Sample Pearson Correlation Coefficient for " << GetMonthName(month) << endl;
 
-    if(windS.Size() < 2)
+    if(windSpeeds.Size() < 2)
     {
         cout << "S_T: No data" << endl;
         cout << "S_R: No data" << endl;
@@ -272,9 +264,9 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
     }
     else
     {
-        double s_t = math.CalculateSPCC(windS, tempT);
-        double s_r = math.CalculateSPCC(windS, solarR);
-        double t_r = math.CalculateSPCC(tempT, solarR);
+        double s_t = math.CalculateSPCC(windSpeeds, ambTemps);
+        double s_r = math.CalculateSPCC(windSpeeds, solarR);
+        double t_r = math.CalculateSPCC(ambTemps, solarR);
 
         cout << fixed << setprecision(2);
         cout << "S_T: " << s_t << endl;
@@ -294,7 +286,7 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
     Math math;
     CollectU collector;
 
-    const Map<int, Map<int, Bst<WeatherRecord>>>& inventory = data.GetInventory();
+    const WeatherRecordCollection::YearCabinet& inventory = data.GetInventory();
 
     // Open output file for CSV export
     string exportFileName = "WindTempSolar.csv";
@@ -318,7 +310,7 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
         return;
     }
 
-    const Map<int, Bst<WeatherRecord>>& monthMap = inventory.At(year);
+    const WeatherRecordCollection::MonthDrawer& monthMap = inventory.At(year);
 
     Vector<double> windSpeeds;
     Vector<double> ambientTemps;
@@ -331,7 +323,7 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
 
         if(monthMap.Contains(month))
         {
-            const Bst<WeatherRecord>& monthBst = monthMap.At(month);
+            const WeatherRecordCollection::RecordFolder& monthBst = monthMap.At(month);
 
             monthBst.InOrder(CollectU::CollectWindSpeed);
             windSpeeds = collector.GetCollection();

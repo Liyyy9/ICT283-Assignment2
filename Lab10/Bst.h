@@ -166,11 +166,9 @@ private:
 // ===============================================================
 
 // Constructor: Initialise empty tree with null root
+// Changed to member initialisation list to fix -Weffc++ warning
 template <class T>
-Bst<T>::Bst()
-{
-    m_root = nullptr;
-}
+Bst<T>::Bst() : m_root(nullptr) {}
 
 // Destructor: Clean up all dynamically allocated nodes
 template <class T>
@@ -180,11 +178,9 @@ Bst<T>::~Bst()
 }
 
 // Copy Constructor: Create a deep copy of another tree
+// Changed to member initialisation list to fix -Weffc++ warning
 template <class T>
-Bst<T>::Bst(const Bst<T>& other)
-{
-    m_root = copyTree(other.m_root);
-}
+Bst<T>::Bst(const Bst<T>& other) : m_root(copyTree(other.m_root)) {}
 
 // Assignment Operator: Replace contents with a deep copy of another tree
 template <class T>
@@ -360,8 +356,8 @@ typename Bst<T>::Node* Bst<T>::copyTree(const Node* tree)
     }
 
     // Create new node with same data
-    Node* newNode = new Node;
-    newNode->data = tree->data;
+    Node* newNode = new Node(tree->data);
+
     // Recursively copy left and right subtrees
     newNode->left = copyTree(tree->left);
     newNode->right = copyTree(tree->right);

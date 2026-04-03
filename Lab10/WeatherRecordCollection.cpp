@@ -51,7 +51,7 @@ void WeatherRecordCollection::Clear()
     m_inventory.Clear();
 }
 
-const Map<int, Map<int, Bst<WeatherRecord>>>& WeatherRecordCollection::GetInventory() const
+const WeatherRecordCollection::YearCabinet& WeatherRecordCollection::GetInventory() const
 {
     return m_inventory;
 }

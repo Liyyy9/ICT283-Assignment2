@@ -37,6 +37,15 @@ template <class K, class T>
 class Map
 {
 public:
+    /**
+     * @name Iterator Type Definitions
+     *
+     * @brief Type aliases for navigating the Map structure.
+     * These allow the user to loop through the collection (e.g., iterating
+     * through all Drawers in a Cabinet) using standard pointer-like syntax.
+     * - iterator: Allows for both traversal and modification of the values.
+     * - const_iterator: Provides read-only traversal, ensuring the data remains unchanged.
+     */
     typedef typename map<K, T>::iterator iterator;
     typedef typename map<K, T>::const_iterator const_iterator;
 
