@@ -27,9 +27,17 @@ void SimplePrint(const Date& d)
 }
 
 // Helper to test Pass-by-Value
-void TestPassByValue(Bst<Date> tempTree, const Date& checkDate, int& pass, int& fail) {
+void TestPassByValue(Bst<Date> tempTree, const Date& checkDate, int& pass, int& fail)
+{
     AssertEqual("Pass-by-value: Tree remains valid", tempTree.IsValid(), pass, fail);
     AssertEqual("Pass-by-value: Tree contains data", tempTree.Search(checkDate), pass, fail);
+}
+
+Vector<Date> testDateStorage;
+
+void CollectDate(const Date& date)
+{
+    testDateStorage.Add(date);
 }
 
 int main()
@@ -77,11 +85,11 @@ int main()
 
     // -------- TEST 4: Data Collection via Static Callback --------
     cout << "--- Test 4 (CollectU collection via static callback) ---" << endl;
-    collector.clear();
-    tree.InOrder(CollectU::Collect);
+    testDateStorage.Clear();
+    tree.InOrder(CollectDate);
 
-    AssertEqual("Collector size matches tree size", collector.size() == 3, passCount, failCount);
-    AssertEqual("First element is correctly sorted", collector[0] == dLeft, passCount, failCount);
+    AssertEqual("Collector size matches tree size", testDateStorage.Size() == 3, passCount, failCount);
+    AssertEqual("First element is correctly sorted", testDateStorage[0] == dLeft, passCount, failCount);
     cout << endl;
 
     // -------- TEST 5: Deep Copy & Pass-by-Value --------
