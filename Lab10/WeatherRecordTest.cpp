@@ -34,7 +34,7 @@ int main()
 
     // -------- TEST 1: Default Constructor --------
     // Verify that default constructor initialises all fields to default values
-    cout << "--- Test 1 (Default Constructor) ---" << endl;
+    cout << "--- Test 1: Default Constructor ---" << endl;
     WeatherRecord record1;
     cout << "Constructed Default WeatherRecord object: record1" << endl
          << endl;
@@ -46,7 +46,7 @@ int main()
 
     // -------- TEST 2: Parameterised Constructor --------
     // Verify that parameterised constructor correctly initialises all fields
-    cout << "--- Test 2 (Parameterised Constructor) ---" << endl;
+    cout << "--- Test 2: Parameterised Constructor ---" << endl;
     Date myDate(15, 6, 2016);
     Time myTime(14, 30);
     WeatherRecord record2(myDate, myTime, 5.5f, 28.3f, 650);
@@ -60,7 +60,7 @@ int main()
 
     // -------- TEST 3: Date Getter and Setter --------
     // Verify that date getter and setter work correctly
-    cout << "--- Test 3 (Date Getter and Setter) ---" << endl;
+    cout << "--- Test 3: Date Getter and Setter ---" << endl;
     Date retrievedDate = record2.GetDate();
     cout << "Original Date: " << retrievedDate << endl;
     AssertEqual("GetDate returns correct date day", retrievedDate.GetDay() == 15, passCount, failCount);
@@ -77,7 +77,7 @@ int main()
 
     // -------- TEST 4: Time Getter and Setter --------
     // Verify that time getter and setter work correctly
-    cout << "--- Test 4 (Time Getter and Setter) ---" << endl;
+    cout << "--- Test 4: Time Getter and Setter ---" << endl;
     Time retrievedTime = record2.GetTime();
     AssertEqual("GetTime returns correct hour", retrievedTime.GetHour() == 14, passCount, failCount);
     AssertEqual("GetTime returns correct minute", retrievedTime.GetMins() == 30, passCount, failCount);
@@ -91,7 +91,7 @@ int main()
 
     // -------- TEST 5: Speed Getter and Setter (m/s) --------
     // Verify that wind speed getter and setter work in m/s
-    cout << "--- Test 5 (Speed Getter and Setter - m/s) ---" << endl;
+    cout << "--- Test 5: Speed Getter and Setter - m/s ---" << endl;
     float retrievedSpeed = record2.GetSpeed();
     cout << "Current speed: " << fixed << setprecision(2) << retrievedSpeed << " m/s" << endl;
     AssertEqual("GetSpeed returns correct value 5.5 m/s", retrievedSpeed == 5.5f, passCount, failCount);
@@ -104,7 +104,7 @@ int main()
 
     // -------- TEST 6: Speed Unit Conversion (m/s to km/h) --------
     // Verify that speed conversion from m/s to km/h is correct (multiply by 3.6)
-    cout << "--- Test 6 (Speed Unit Conversion - m/s to km/h) ---" << endl;
+    cout << "--- Test 6: Speed Unit Conversion - m/s to km/h ---" << endl;
     WeatherRecord record3(myDate, myTime, 2.5f, 25.0f, 500);
     float speedMs = record3.GetSpeed();
     float speedKmH = record3.GetSpeedKmH();
@@ -117,7 +117,7 @@ int main()
 
     // -------- TEST 7: Ambient Temperature Getter and Setter --------
     // Verify that ambient temperature getter and setter work correctly
-    cout << "--- Test 7 (Ambient Temperature Getter and Setter) ---" << endl;
+    cout << "--- Test 7: Ambient Temperature Getter and Setter ---" << endl;
     float retrievedTemp = record2.GetAmbTemp();
     cout << "Current ambient temperature: " << fixed << setprecision(1) << retrievedTemp << endl;
     AssertEqual("GetAmbTemp returns correct value 28.3", record2.GetAmbTemp() == 28.3f, passCount, failCount);
@@ -130,7 +130,7 @@ int main()
 
     // -------- TEST 8: Solar Radiation Getter and Setter --------
     // Verify that solar radiation getter and setter work correctly
-    cout << "--- Test 8 (Solar Radiation Getter and Setter) ---" << endl;
+    cout << "--- Test 8: Solar Radiation Getter and Setter ---" << endl;
     int retrievedRad = record2.GetSolarRad();
     cout << "Current solar radiation: " << retrievedRad << endl;
     AssertEqual("GetSolarRad returns correct value 650", retrievedRad == 650, passCount, failCount);
@@ -143,7 +143,7 @@ int main()
 
     // -------- TEST 9: Zero Values --------
     // Verify handling of zero values for speed and temperatures
-    cout << "--- Test 9 (Zero Values) ---" << endl;
+    cout << "--- Test 9: Zero Values ---" << endl;
     WeatherRecord record5(myDate, myTime, 0.0f, 0.0f, 0);
     AssertEqual("Zero speed m/s returns 0.0", record5.GetSpeed() == 0.0f, passCount, failCount);
     AssertEqual("Zero speed converts to 0.0 km/h", record5.GetSpeedKmH() == 0.0f, passCount, failCount);
@@ -153,7 +153,7 @@ int main()
 
     // -------- TEST 10: Negative Values --------
     // Verify handling of negative values (valid for temperature)
-    cout << "--- Test 10 (Negative Values) ---" << endl;
+    cout << "--- Test 10: Negative Values ---" << endl;
     WeatherRecord record6(myDate, myTime, 3.0f, -5.2f, 100);
     AssertEqual("Negative ambient temperature handled correctly", record6.GetAmbTemp() == -5.2f, passCount, failCount);
     record6.SetAmbTemp(-15.0f);
