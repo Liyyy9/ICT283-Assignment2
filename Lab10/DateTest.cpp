@@ -34,7 +34,7 @@ int main()
 
     // -------- TEST 1: Default Constructor --------
     // Verify that default constructor initialises date to 1/1/1800
-    cout << "--- Test 1 (Default Constructor) ---" << endl;
+    cout << "--- Test 1: Default Constructor ---" << endl;
     Date myDate;
     cout << "Constructed Default Date object: myDate" << endl
          << endl;
@@ -45,7 +45,7 @@ int main()
 
     // -------- TEST 2: Parameterised Constructor --------
     // Verify that default parameterised constructor correctly initialises to provided values
-    cout << "--- Test 2 (Parameterised Constructor) ---" << endl;
+    cout << "--- Test 2: Parameterised Constructor ---" << endl;
     Date myDate2(30, 6, 2016);
     cout << "Constructed Parameterised Date object: myDate2" << endl
          << endl;
@@ -56,7 +56,7 @@ int main()
 
     // -------- TEST 3: Output Stream Operator --------
     // Verify that ostream operator formats date correctly (DD MonthName YYYY)
-    cout << "--- Test 3 (<< operator) ---" << endl;
+    cout << "--- Test 3: << operator ---" << endl;
     cout << "Default:" << endl;
     cout << myDate << endl;
 
@@ -66,7 +66,7 @@ int main()
 
     // -------- TEST 4: Getter Methods --------
     // Verify that getter methods return correct values
-    cout << "--- Test 4 (Getters) ---" << endl;
+    cout << "--- Test 4: Getters ---" << endl;
     AssertEqual("myDate2.GetDay() returns 30", myDate2.GetDay() == 30, passCount, failCount);
     AssertEqual("myDate2.GetMonth() returns 6", myDate2.GetMonth() == 6, passCount, failCount);
     AssertEqual("myDate2.GetYear() returns 2016", myDate2.GetYear() == 2016, passCount, failCount);
@@ -74,7 +74,7 @@ int main()
 
     // -------- TEST 5: Setter Methods --------
     // Verify that setter methods correctly update date values
-    cout << "--- Test 5 (Setters) ---" << endl;
+    cout << "--- Test 5: Setters ---" << endl;
     cout << "Before setting : " << endl;
     cout << myDate << endl;
 
@@ -92,7 +92,7 @@ int main()
 
     // -------- TEST 6: GetMonthName Helper Function --------
     // Verify that GetMonthName correctly converts month numbers (1-12) to month names
-    cout << "--- Test 6 (GetMonthName) ---" << endl;
+    cout << "--- Test 6: GetMonthName ---" << endl;
     AssertEqual("GetMonthName(1) returns January", GetMonthName(1) == "January", passCount, failCount);
     AssertEqual("GetMonthName(6) returns June", GetMonthName(6) == "June", passCount, failCount);
     AssertEqual("GetMonthName(12) returns December", GetMonthName(12) == "December", passCount, failCount);
@@ -101,7 +101,7 @@ int main()
 
     // -------- TEST 7: IsLeapYear Helper Function --------
     // Verify that IsLeapYear correctly identifies a leap year
-    cout << "--- Test 7 (IsLeapYear) ---" << endl;
+    cout << "--- Test 7: IsLeapYear ---" << endl;
 
     AssertEqual("2024 is a leap year", IsLeapYear(2024) == true, passCount, failCount);
     AssertEqual("2000 is a leap year", IsLeapYear(2000) == true, passCount, failCount);
@@ -111,7 +111,7 @@ int main()
 
     // -------- TEST 8: GetDaysInMonth Helper Function --------
     // Verify that GetDaysInMonth correctly returns days in a month, taking leap years into account
-    cout << "--- Test 8 (GetDaysInMonth) ---" << endl;
+    cout << "--- Test 8: GetDaysInMonth ---" << endl;
 
     AssertEqual("February 2024 returns 29", GetDaysInMonth(2, 2024) == 29, passCount, failCount);
     AssertEqual("February 2023 returns 28", GetDaysInMonth(2, 2023) == 28, passCount, failCount);
@@ -121,7 +121,7 @@ int main()
 
     // -------- TEST 9: IsValidDate Helper Function --------
     // Verify that IsValidDate correctly identifies invalid dates
-    cout << "--- Test 9 (IsValidDate) ---" << endl;
+    cout << "--- Test 9: IsValidDate ---" << endl;
 
     AssertEqual("29 Feb 2024 is a valid date", IsValidDate(29, 2, 2024) == true, passCount, failCount);
     AssertEqual("29 Feb 2023 is NOT a valid date", IsValidDate(29, 2, 2023) == false, passCount, failCount);
@@ -131,11 +131,37 @@ int main()
     AssertEqual("31 March 2026 is a valid date", IsValidDate(31, 3, 2026) == true, passCount, failCount);
     cout << endl;
 
-    // -------- TEST 10: CSV Header Reading - WAST, S, T, and SR Columns --------
+    // -------- TEST 10: Comparison Operators (< and ==) --------
+    // Verify that the comparison operators correctly identify earlier,
+    // later, and identical dates.
+    cout << "--- Test 10: Comparison Operators ---" << endl;
+
+    Date earlyDate(1, 1, 2010);
+    Date middleDate(15, 6, 2015);
+    Date middleDateCopy(15, 6, 2015);
+    Date lateDate(31, 12, 2020);
+    Date differentDay(16, 6, 2015);
+    Date differentMonth(15, 7, 2015);
+
+    // Testing Equality (==)
+    AssertEqual("Identical dates are equal", (middleDate == middleDateCopy) == true, passCount, failCount);
+    AssertEqual("Different dates are NOT equal", (earlyDate == lateDate) == false, passCount, failCount);
+    AssertEqual("Different days are NOT equal", (middleDate == differentDay) == false, passCount, failCount);
+
+    // Testing Less-Than (<)
+    AssertEqual("2010 < 2015 (Year check)", (earlyDate < middleDate) == true, passCount, failCount);
+    AssertEqual("2020 is NOT < 2015", (lateDate < middleDate) == false, passCount, failCount);
+    AssertEqual("June < July (Month check)", (middleDate < differentMonth) == true, passCount, failCount);
+    AssertEqual("Day 15 < Day 16 (Day check)", (middleDate < differentDay) == true, passCount, failCount);
+    AssertEqual("Same dates are NOT < each other", (middleDate < middleDateCopy) == false, passCount, failCount);
+
+    cout << endl;
+
+    // -------- TEST 11: CSV Header Reading - WAST, S, T, and SR Columns --------
     // Verify that CSV header reader correctly identifies WAST (date/time), S (speed),
     // T (ambient temperature), and SR (solar radiation) column indexes
     // Reads header in CSV file and tests parsing of date/time and speed values
-    cout << "--- Test 10 (CSV Header - WAST, S, T and SR) ---" << endl;
+    cout << "--- Test 11: CSV Header - WAST, S, T and SR ---" << endl;
     ifstream metadataFile("data/MetData-31-3b.csv");
 
     // Check if metadata file exists and can be opened

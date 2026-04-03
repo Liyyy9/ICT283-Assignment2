@@ -44,7 +44,10 @@
 		</Unit>
 		<Unit filename="CSVLoader.cpp" />
 		<Unit filename="CSVLoader.h" />
-		<Unit filename="CSVLoaderTest.cpp" />
+		<Unit filename="CSVLoaderTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="CollectU.cpp" />
 		<Unit filename="CollectU.h">
 			<Option target="&lt;{~None~}&gt;" />
@@ -56,10 +59,7 @@
 		<Unit filename="Constants.h" />
 		<Unit filename="Date.cpp" />
 		<Unit filename="Date.h" />
-		<Unit filename="DateTest.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
+		<Unit filename="DateTest.cpp" />
 		<Unit filename="Main.cpp">
 			<Option compile="0" />
 			<Option link="0" />
