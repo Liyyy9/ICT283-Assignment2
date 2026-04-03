@@ -30,7 +30,7 @@ int main()
 
     // -------- TEST 1: Default Constructor --------
     // Verify that default constructor initialises empty vector
-    cout << "--- Test 1 (Default Constructor) ---" << endl;
+    cout << "--- Test 1: Default Constructor ---" << endl;
     Vector<int> numbers;
     cout << "Constructed Default Vector object: numbers" << endl
          << endl;
@@ -39,7 +39,7 @@ int main()
 
     // -------- TEST 2: Insert Integer Elements --------
     // Verify that insert correctly adds elements to vector
-    cout << "--- Test 2 (Insert Integer Elements) ---" << endl;
+    cout << "--- Test 2: Insert Integer Elements ---" << endl;
     numbers.Insert(99, 0);
     AssertEqual("Size after first insert is 1", numbers.Size() == 1, passCount, failCount);
     AssertEqual("First element is 99", numbers[0] == 99, passCount, failCount);
@@ -51,7 +51,7 @@ int main()
 
     // -------- TEST 3: Vector with String Elements --------
     // Verify that vector works with string template
-    cout << "--- Test 3 (Vector with String Elements) ---" << endl;
+    cout << "--- Test 3: Vector with String Elements ---" << endl;
     Vector<string> names;
     cout << "Constructed Vector<string> object: names" << endl
          << endl;

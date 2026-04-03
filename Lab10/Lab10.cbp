@@ -102,12 +102,12 @@
 		</Unit>
 		<Unit filename="Utilities.cpp" />
 		<Unit filename="Utilities.h" />
-		<Unit filename="UtilitiesTest.cpp" />
-		<Unit filename="Vector.h" />
-		<Unit filename="VectorTest.cpp">
+		<Unit filename="UtilitiesTest.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="Vector.h" />
+		<Unit filename="VectorTest.cpp" />
 		<Unit filename="WeatherRecord.cpp" />
 		<Unit filename="WeatherRecord.h" />
 		<Unit filename="WeatherRecordCollection.cpp" />
