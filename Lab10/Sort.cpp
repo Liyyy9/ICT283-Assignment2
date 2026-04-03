@@ -7,54 +7,44 @@
 
 void Sort::ExecuteSort(int low, int high, Vector<WeatherRecord>& records)
 {
-    if(low < high && high-low >= 2)
+    if(low < high)
     {
         int pivotIndex;
         Split(low, high, records, pivotIndex);
-
         ExecuteSort(low, pivotIndex - 1, records);
         ExecuteSort(pivotIndex + 1, high, records);
-    }
-    else if (high - low == 1)
-    {
-        if(records[high] < records[low])
-        {
-            WeatherRecord tempRecord;
-            tempRecord = records[high];
-            records[high] = records[low];
-            records[low] = tempRecord;
-        }
     }
 }
 
 void Sort::Split(int low, int high, Vector<WeatherRecord>& records, int& pivotIndex)
 {
-
+    // Sorting from middle since files are sorted
     int mid = low + (high - low) / 2;
 
-    WeatherRecord tempRecord = records[mid];
-    records[mid] = records[high];
-    records[high] = tempRecord;
+    WeatherRecord pivot = records[mid];
+    int index1 = low;
+    int index2 = high;
 
-    WeatherRecord pValue = records[high];
-    int i = low - 1;
-
-    for(int j = low; j < high; j++)
+    while(index1 < index2)
     {
-        if(records[j] < pValue || records[j] == pValue)
+        while(index1 < index2 && !(pivot < records[index1]))
         {
-            i++;
-            WeatherRecord temp;
-            temp = records[i];
-            records[i] = records[j];
-            records[j] = temp;
+            index1++;
+        }
+        while(index1 < index2 && pivot < records[index2])
+        {
+            index2--;
+        }
+
+        if(index1 < index2)
+        {
+            WeatherRecord temp = records[index1];
+            records[index1] = records[index2];
+            records[index2] = temp;
         }
     }
-
-    WeatherRecord finalTemp;
-    finalTemp = records[i + 1];
-    records[i + 1] = records[high];
-    records[high] = finalTemp;
-
-    pivotIndex = i + 1;
+    pivotIndex = index2 - 1;
+    WeatherRecord temp = records[low];
+    records[low] = records[pivotIndex];
+    records[pivotIndex] = temp;
 }
