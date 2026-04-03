@@ -6,7 +6,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Assignment 1
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #include "Vector.h"

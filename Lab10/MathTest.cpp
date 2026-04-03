@@ -5,7 +5,7 @@
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
-// Project: ICT283 - Lab 10
+// Project: ICT283 - Assignment 2
 // ===============================================================
 
 #include "Math.h"
