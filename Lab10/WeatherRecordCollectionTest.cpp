@@ -1,7 +1,7 @@
 // ===============================================================
 // WeatherRecordCollectionTest.cpp
 //      Comprehensive testing of WeatherRecordCollection functionality
-//      Test dynamic array operations and record management
+//      Test hierarchical Map-of-Maps-of-BSTs record management
 //
 // Student: Liyana Afiqah Binte Jazmi
 // Student ID: 35849414
@@ -13,132 +13,92 @@
 #include "Date.h"
 #include "Time.h"
 #include "Utilities.h"
+#include "Map.h"
+#include "Bst.h"
+#include "CollectU.h"
+
 #include <iostream>
 #include <string>
 
 using std::cout;
 using std::endl;
 using std::string;
+using std::abs;
 
 int main()
 {
     // Initialise test counters
     int passCount = 0;
     int failCount = 0;
+    CollectU collector;
 
     cout << "==== Running WeatherRecordCollection Test Cases ====" << endl
          << endl;
 
     // -------- TEST 1: Collection Initialization --------
     // Verify that a new collection starts empty
-    cout << "--- Test 1 (Collection Initialization) ---" << endl;
+    cout << "--- Test 1: Collection Initialization ---" << endl;
     WeatherRecordCollection collection;
 
-    AssertEqual("New collection is empty (size = 0)", collection.Size() == 0, passCount, failCount);
+    AssertEqual("New collection has 0 years", collection.GetYearCount() == 0, passCount, failCount);
     cout << endl;
 
-    // -------- TEST 2: Single Record Insertion --------
-    // Verify that a single record can be inserted and retrieved
-    cout << "--- Test 2 (Single Record Insertion) ---" << endl;
+    // -------- TEST 2: Hierarchical Insertion --------
+    // Verify that inserting records creates the correct Map structure
+    cout << "--- Test 2: Hierarchical Insertion ---" << endl;
 
-    Date date1(15, 3, 2016);
-    Time time1(10, 30);
-    WeatherRecord record1(date1, time1, 5.5f, 22.1f, 450);
+    // Record 1: March 2016
+    WeatherRecord record1(Date(15, 3, 2016), Time(10, 30), 5.5f, 22.1f, 450);
+    // Record 2: March 2016
+    WeatherRecord record2(Date(16, 3, 2016), Time(11, 00), 6.0f, 23.0f, 500);
+    // Record 3: April 2017
+    WeatherRecord record3(Date(1, 4, 2017), Time(12, 00), 4.0f, 20.0f, 300);
 
-    collection.Insert(record1, 0);
+    collection.Insert(record1);
+    collection.Insert(record2);
+    collection.Insert(record3);
 
-    AssertEqual("Collection size is 1 after insertion", collection.Size() == 1, passCount, failCount);
-    AssertEqual("Retrieved record has correct day", collection[0].GetDate().GetDay() == 15, passCount, failCount);
-    AssertEqual("Retrieved record has correct month", collection[0].GetDate().GetMonth() == 3, passCount, failCount);
-    AssertEqual("Retrieved record has correct year", collection[0].GetDate().GetYear() == 2016, passCount, failCount);
-    AssertEqual("Retrieved record has correct wind speed", collection[0].GetSpeed() == 5.5f, passCount, failCount);
+    const WeatherRecordCollection::YearCabinet& inv = collection.GetInventory();
+
+    AssertEqual("Collection has 2 unique years (2016, 2017)", collection.GetYearCount() == 2, passCount, failCount);
+    AssertEqual("Year 2016 exists in Map", inv.Contains(2016), passCount, failCount);
+    AssertEqual("Year 2017 exists in Map", inv.Contains(2017), passCount, failCount);
     cout << endl;
 
-    // -------- TEST 3: Multiple Record Insertion --------
-    // Verify that multiple records can be inserted sequentially
-    cout << "--- Test 3 (Multiple Record Insertion) ---" << endl;
+    // -------- TEST 3: Month Map Integrity --------
+    cout << "--- Test 3: Month Map Integrity ---" << endl;
 
-    Date date2(16, 3, 2016);
-    Time time2(11, 0);
-    WeatherRecord record2(date2, time2, 6.2f, 23.5f, 500);
+    bool march2016Exists = inv.At(2016).Contains(3);
+    bool april2017Exists = inv.At(2017).Contains(4);
+    bool april2016DoesNotExist = !inv.At(2016).Contains(4);
 
-    Date date3(17, 3, 2016);
-    Time time3(11, 30);
-    WeatherRecord record3(date3, time3, 4.8f, 21.2f, 480);
-
-    collection.Insert(record2, collection.Size());
-    collection.Insert(record3, collection.Size());
-
-    AssertEqual("Collection size is 3 after three insertions", collection.Size() == 3, passCount, failCount);
-    AssertEqual("Second record has correct day", collection[1].GetDate().GetDay() == 16, passCount, failCount);
-    AssertEqual("Third record has correct day", collection[2].GetDate().GetDay() == 17, passCount, failCount);
+    AssertEqual("March (3) exists in 2016 drawer", march2016Exists, passCount, failCount);
+    AssertEqual("April (4) exists in 2017 drawer", april2017Exists, passCount, failCount);
+    AssertEqual("April (4) does NOT exist in 2016", april2016DoesNotExist, passCount, failCount);
     cout << endl;
 
-    // -------- TEST 4: Data Integrity --------
-    // Verify that all record fields are preserved correctly
-    cout << "--- Test 4 (Data Integrity) ---" << endl;
+    // -------- TEST 4: BST Storage and Traversal --------
+    // Use CollectU to verify that both records were stored in the March 2016 BST
+    cout << "--- Test 4: BST Storage and Traversal ---" << endl;
 
-    bool record1Intact = (collection[0].GetSpeed() == 5.5f &&
-                          collection[0].GetAmbTemp() == 22.1f &&
-                          collection[0].GetSolarRad() == 450);
+    collector.clear();
+    inv.At(2016).At(3).InOrder(CollectU::CollectWindSpeed);
 
-    bool record2Intact = (collection[1].GetSpeed() == 6.2f &&
-                          collection[1].GetAmbTemp() == 23.5f &&
-                          collection[1].GetSolarRad() == 500);
+    Vector<double>& marchSpeeds = collector.GetCollection();
 
-    bool record3Intact = (collection[2].GetSpeed() == 4.8f &&
-                          collection[2].GetAmbTemp() == 21.2f &&
-                          collection[2].GetSolarRad() == 480);
-
-    AssertEqual("First record data is intact", record1Intact, passCount, failCount);
-    AssertEqual("Second record data is intact", record2Intact, passCount, failCount);
-    AssertEqual("Third record data is intact", record3Intact, passCount, failCount);
+    cout << marchSpeeds[1];
+    AssertEqual("March 2016 BST contains 2 records", marchSpeeds.Size() == 2, passCount, failCount);
+    AssertEqual("First speed in BST is 19.8", abs(marchSpeeds[0]- 19.8) < 0.01, passCount, failCount);
+    AssertEqual("Second speed in BST is 21.6", abs(marchSpeeds[1]- 21.6) < 0.01, passCount, failCount);
     cout << endl;
 
-    // -------- TEST 5: Time Information --------
-    // Verify that time information is preserved in collection
-    cout << "--- Test 5 (Time Information Preservation) ---" << endl;
+    // -------- TEST 5: Data Integrity (Search) --------
+    cout << "--- Test 5: Data Integrity via BST Search ---" << endl;
 
-    bool record1TimeValid = (collection[0].GetTime().GetHour() == 10 &&
-                             collection[0].GetTime().GetMins() == 30);
+    WeatherRecord searchTarget(Date(1, 4, 2017), Time(12, 00), 4.0f, 20.0f, 300);
 
-    bool record2TimeValid = (collection[1].GetTime().GetHour() == 11 &&
-                             collection[1].GetTime().GetMins() == 0);
-
-    bool record3TimeValid = (collection[2].GetTime().GetHour() == 11 &&
-                             collection[2].GetTime().GetMins() == 30);
-
-    AssertEqual("First record time is correct", record1TimeValid, passCount, failCount);
-    AssertEqual("Second record time is correct", record2TimeValid, passCount, failCount);
-    AssertEqual("Third record time is correct", record3TimeValid, passCount, failCount);
-    cout << endl;
-
-    // -------- TEST 6: Operator[] Access --------
-    // Verify that operator[] provides correct access to records
-    cout << "--- Test 6 (Operator[] Access) ---" << endl;
-
-    WeatherRecord retrievedRecord = collection[1];
-
-    AssertEqual("Operator[] returns correct record (day)", retrievedRecord.GetDate().GetDay() == 16, passCount, failCount);
-    AssertEqual("Operator[] returns correct record (speed)", retrievedRecord.GetSpeed() == 6.2f, passCount, failCount);
-    AssertEqual("Operator[] returns correct record (temp)", retrievedRecord.GetAmbTemp() == 23.5f, passCount, failCount);
-    cout << endl;
-
-    // -------- TEST 7: Collection Size Tracking --------
-    // Verify that size is accurately tracked with operations
-    cout << "--- Test 7 (Size Tracking) ---" << endl;
-
-    WeatherRecordCollection newCollection;
-    AssertEqual("Empty collection has size 0", newCollection.Size() == 0, passCount, failCount);
-
-    newCollection.Insert(record1, 0);
-    AssertEqual("Collection size is 1 after 1 insertion", newCollection.Size() == 1, passCount, failCount);
-
-    newCollection.Insert(record2, 1);
-    AssertEqual("Collection size is 2 after 2 insertions", newCollection.Size() == 2, passCount, failCount);
-
-    newCollection.Insert(record3, 2);
-    AssertEqual("Collection size is 3 after 3 insertions", newCollection.Size() == 3, passCount, failCount);
+    bool found = inv.At(2017).At(4).Search(searchTarget);
+    AssertEqual("Search successfully found April 2017 record in BST", found, passCount, failCount);
     cout << endl;
 
     // -------- Summary --------

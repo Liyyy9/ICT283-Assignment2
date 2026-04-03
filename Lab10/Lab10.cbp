@@ -107,15 +107,15 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="Vector.h" />
-		<Unit filename="VectorTest.cpp" />
+		<Unit filename="VectorTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="WeatherRecord.cpp" />
 		<Unit filename="WeatherRecord.h" />
 		<Unit filename="WeatherRecordCollection.cpp" />
 		<Unit filename="WeatherRecordCollection.h" />
-		<Unit filename="WeatherRecordCollectionTest.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
+		<Unit filename="WeatherRecordCollectionTest.cpp" />
 		<Unit filename="WeatherRecordTest.cpp">
 			<Option compile="0" />
 			<Option link="0" />
