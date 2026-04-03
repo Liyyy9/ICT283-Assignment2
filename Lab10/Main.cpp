@@ -60,7 +60,7 @@ int main()
         // Check if the input is a valid number
         if (!(cin >> choice))
         {
-            cout << "Invalid input. Please enter a number.\n"
+            cout << "\nInvalid input. Please enter a number.\n"
                  << endl;
             cin.clear();
             cin.ignore(1000, '\n');
