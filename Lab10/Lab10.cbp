@@ -59,7 +59,10 @@
 		<Unit filename="Constants.h" />
 		<Unit filename="Date.cpp" />
 		<Unit filename="Date.h" />
-		<Unit filename="DateTest.cpp" />
+		<Unit filename="DateTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Main.cpp">
 			<Option compile="0" />
 			<Option link="0" />
@@ -67,10 +70,7 @@
 		<Unit filename="Map.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="MapTest.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
+		<Unit filename="MapTest.cpp" />
 		<Unit filename="Math.cpp" />
 		<Unit filename="Math.h" />
 		<Unit filename="MathTest.cpp">

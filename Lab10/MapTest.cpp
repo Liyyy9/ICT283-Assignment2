@@ -28,7 +28,7 @@ int main()
          << endl;
 
     // -------- TEST 1: Basic Insertion and Size --------
-    cout << "--- Test 1 (Insertion & Size) ---" << endl;
+    cout << "--- Test 1: Insertion & Size ---" << endl;
     Map<int, string> yearMap;
 
     yearMap[2023] = "Data for 2023";
@@ -40,14 +40,14 @@ int main()
     cout << endl;
 
     // -------- TEST 2: Search Logic (Contains) --------
-    cout << "--- Test 2 (Search Implementation: Contains) ---" << endl;
+    cout << "--- Test 2: Search Implementation: Contains ---" << endl;
 
     AssertEqual("Search: Successfully found existing key 2024", yearMap.Contains(2024), passCount, failCount);
     AssertEqual("Search: Correctly missed non-existent key 1990", yearMap.Contains(1990) == false, passCount, failCount);
     cout << endl;
 
     // -------- TEST 3: Update and Duplicate Key Logic --------
-    cout << "--- Test 3 (Update/Overwrite Logic) ---" << endl;
+    cout << "--- Test 3: Update/Overwrite Logic ---" << endl;
 
     yearMap[2023] = "Updated Data";
     AssertEqual("Map updated value for existing key", yearMap[2023] == "Updated Data", passCount, failCount);
@@ -55,7 +55,7 @@ int main()
     cout << endl;
 
     // -------- TEST 4: Clear() --------
-    cout << "--- Test 4 (Clear Logic) ---" << endl;
+    cout << "--- Test 4: Clear Logic ---" << endl;
 
     yearMap.Clear();
     AssertEqual("Map size is 0 after Clear()", yearMap.Size() == 0, passCount, failCount);
@@ -63,7 +63,7 @@ int main()
     cout << endl;
 
     // -------- TEST 5: Using Different Key/Value Types --------
-    cout << "--- Test 5 (Template Flexibility) ---" << endl;
+    cout << "--- Test 5: Template Flexibility ---" << endl;
     Map<string, double> rainMap;
     rainMap["January"] = 15.5;
 
