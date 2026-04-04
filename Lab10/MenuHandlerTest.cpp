@@ -16,7 +16,7 @@
 #include "Time.h"
 #include "Vector.h"
 #include "Utilities.h"
-#include "CollectU.h"
+#include "WeatherStatsCollector.h"
 #include "Map.h"
 #include "Bst.h"
 
@@ -89,13 +89,13 @@ int main()
     // -------- TEST 2: Option 1 - Wind Speed Analysis - Valid Data --------
     cout << "--- Test 2: Option 1 - WindAvgStdDev_Choice1 (March 2016) ---" << endl;
 
-    CollectU collector;
+    WeatherStatsCollector collector;
     collector.clear();
 
     const WeatherRecordCollection::YearCabinet& inventory = testData.GetInventory();
     if(inventory.Contains(2016) && inventory.At(2016).Contains(3))
     {
-        inventory.At(2016).At(3).InOrder(CollectU::CollectWindSpeed);
+        inventory.At(2016).At(3).InOrder(WeatherStatsCollector::CollectWindSpeed);
     }
 
     Vector<double>& marchWindSpeeds = collector.GetCollection();
@@ -124,7 +124,7 @@ int main()
         if(inventory.Contains(year) && inventory.At(year).Contains(3))
         {
             collector.clear();
-            inventory.At(year).At(3).InOrder(CollectU::CollectWindSpeed);
+            inventory.At(year).At(3).InOrder(WeatherStatsCollector::CollectWindSpeed);
 
             for(int i = 0; i< collector.GetCollection().Size(); i++)
             {
@@ -132,7 +132,7 @@ int main()
             }
 
             collector.clear();
-            inventory.At(year).At(3).InOrder(CollectU::CollectAmbientTemp);
+            inventory.At(year).At(3).InOrder(WeatherStatsCollector::CollectAmbientTemp);
 
             for(int i = 0; i< collector.GetCollection().Size(); i++)
             {

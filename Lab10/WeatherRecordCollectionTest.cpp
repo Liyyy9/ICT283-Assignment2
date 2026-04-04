@@ -15,7 +15,7 @@
 #include "Utilities.h"
 #include "Map.h"
 #include "Bst.h"
-#include "CollectU.h"
+#include "WeatherStatsCollector.h"
 
 #include <iostream>
 #include <string>
@@ -30,7 +30,7 @@ int main()
     // Initialise test counters
     int passCount = 0;
     int failCount = 0;
-    CollectU collector;
+    WeatherStatsCollector collector;
 
     cout << "==== Running WeatherRecordCollection Test Cases ====" << endl
          << endl;
@@ -78,11 +78,11 @@ int main()
     cout << endl;
 
     // -------- TEST 4: BST Storage and Traversal --------
-    // Use CollectU to verify that both records were stored in the March 2016 BST
+    // Use WeatherStatsCollector to verify that both records were stored in the March 2016 BST
     cout << "--- Test 4: BST Storage and Traversal ---" << endl;
 
     collector.clear();
-    inv.At(2016).At(3).InOrder(CollectU::CollectWindSpeed);
+    inv.At(2016).At(3).InOrder(WeatherStatsCollector::CollectWindSpeed);
 
     Vector<double>& marchSpeeds = collector.GetCollection();
 

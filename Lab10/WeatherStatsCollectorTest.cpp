@@ -1,6 +1,6 @@
 // ===============================================================
-// CollectUTest.cpp
-//       Comprehensive testing of CollectU class
+// WeatherStatsCollectorTest.cpp
+//       Comprehensive testing of WeatherStatsCollector class
 //       Tests static collection, indexing, and clearing logic
 //
 // Student: Liyana Afiqah Binte Jazmi
@@ -8,7 +8,7 @@
 // Project: ICT283 - Assignment 2
 // ===============================================================
 
-#include "CollectU.h"
+#include "WeatherStatsCollector.h"
 #include "Date.h"
 #include "Utilities.h"
 #include "Vector.h"
@@ -24,9 +24,9 @@ int main()
     int passCount = 0;
     int failCount = 0;
 
-    cout << "==== Running CollectU Test Cases ====" << endl << endl;
+    cout << "==== Running WeatherStatsCollector Test Cases ====" << endl << endl;
 
-    CollectU collector;
+    WeatherStatsCollector collector;
 
     // -------- TEST 1: Initial State --------
     cout << "--- Test 1: Initial State ---" << endl;
@@ -47,11 +47,11 @@ int main()
     record4.SetSpeed(4.0);
     record5.SetSpeed(6.0);
 
-    CollectU::CollectWindSpeed(record1);
-    CollectU::CollectWindSpeed(record2);
-    CollectU::CollectWindSpeed(record3);
-    CollectU::CollectWindSpeed(record4);
-    CollectU::CollectWindSpeed(record5);
+    WeatherStatsCollector::CollectWindSpeed(record1);
+    WeatherStatsCollector::CollectWindSpeed(record2);
+    WeatherStatsCollector::CollectWindSpeed(record3);
+    WeatherStatsCollector::CollectWindSpeed(record4);
+    WeatherStatsCollector::CollectWindSpeed(record5);
 
     AssertEqual("Size should be 5", collector.size() == 5, passCount, failCount);
     cout << endl;
@@ -66,11 +66,11 @@ int main()
     record4.SetAmbTemp(30.4);
     record5.SetAmbTemp(30.4);
 
-    CollectU::CollectAmbientTemp(record1);
-    CollectU::CollectAmbientTemp(record2);
-    CollectU::CollectAmbientTemp(record3);
-    CollectU::CollectAmbientTemp(record4);
-    CollectU::CollectAmbientTemp(record5);
+    WeatherStatsCollector::CollectAmbientTemp(record1);
+    WeatherStatsCollector::CollectAmbientTemp(record2);
+    WeatherStatsCollector::CollectAmbientTemp(record3);
+    WeatherStatsCollector::CollectAmbientTemp(record4);
+    WeatherStatsCollector::CollectAmbientTemp(record5);
 
     AssertEqual("Size should be 5", collector.size() == 5, passCount, failCount);
     cout << endl;
@@ -85,11 +85,11 @@ int main()
     record4.SetSolarRad(100);
     record5.SetSolarRad(100);
 
-    CollectU::CollectSolarRad(record1);
-    CollectU::CollectSolarRad(record2);
-    CollectU::CollectSolarRad(record3);
-    CollectU::CollectSolarRad(record4);
-    CollectU::CollectSolarRad(record5);
+    WeatherStatsCollector::CollectSolarRad(record1);
+    WeatherStatsCollector::CollectSolarRad(record2);
+    WeatherStatsCollector::CollectSolarRad(record3);
+    WeatherStatsCollector::CollectSolarRad(record4);
+    WeatherStatsCollector::CollectSolarRad(record5);
 
     AssertEqual("Size should be 5", collector.size() == 5, passCount, failCount);
     cout << endl;
@@ -105,7 +105,7 @@ int main()
 
     // -------- TEST 6: Static Persistence Test --------
     cout << "--- Test 6: Static Persistence ---" << endl;
-    CollectU secondCollector;
+    WeatherStatsCollector secondCollector;
     AssertEqual("New object instance should still see size 5",
                 secondCollector.size() == 5, passCount, failCount);
     cout << endl;
@@ -115,7 +115,7 @@ int main()
     WeatherRecord record6;
     record6.SetSolarRad(200);
 
-    CollectU::CollectSolarRad(record6);
+    WeatherStatsCollector::CollectSolarRad(record6);
 
     AssertEqual("Size should be 6 after adding", collector.size() == 6, passCount, failCount);
     cout << endl;
@@ -136,7 +136,7 @@ int main()
     cout << "Total Failed: " << failCount << endl;
     cout << "      Total : " << (passCount + failCount) << endl << endl;
 
-    cout << "==== End of CollectU Test Cases ===" << endl;
+    cout << "==== End of WeatherStatsCollector Test Cases ===" << endl;
 
     return 0;
 }

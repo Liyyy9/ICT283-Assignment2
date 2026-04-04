@@ -15,7 +15,7 @@
 #include "Date.h"
 #include "Vector.h"
 #include "Utilities.h"
-#include "CollectU.h"
+#include "WeatherStatsCollector.h"
 
 #include <iomanip>
 #include <iostream>
@@ -116,7 +116,7 @@ void MenuHandler::HandleChoice(int choice, const WeatherRecordCollection &data)
 void MenuHandler::WindAvgStdDev_Choice1(int month, int year, const WeatherRecordCollection &data)
 {
     Math math;
-    CollectU collector;
+    WeatherStatsCollector collector;
 
     // Ensure that storage is empty
     collector.clear();
@@ -128,7 +128,7 @@ void MenuHandler::WindAvgStdDev_Choice1(int month, int year, const WeatherRecord
     if(inventory.Contains(year) && inventory.At(year).Contains(month))
     {
         // Traverses the BST for the specific month/year and populates the collection
-        inventory.At(year).At(month).InOrder(CollectU::CollectWindSpeed);
+        inventory.At(year).At(month).InOrder(WeatherStatsCollector::CollectWindSpeed);
 
         Vector<double>& results = collector.GetCollection();
 
@@ -160,7 +160,7 @@ void MenuHandler::WindAvgStdDev_Choice1(int month, int year, const WeatherRecord
 void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordCollection &data)
 {
     Math math;
-    CollectU collector;
+    WeatherStatsCollector collector;
 
     const WeatherRecordCollection::YearCabinet inventory = data.GetInventory();
 
@@ -184,7 +184,7 @@ void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordColl
         {
             const WeatherRecordCollection::RecordFolder& monthBst = monthMap.At(month);
 
-            monthBst.InOrder(CollectU::CollectAmbientTemp);
+            monthBst.InOrder(WeatherStatsCollector::CollectAmbientTemp);
 
             Vector<double>& results = collector.GetCollection();
 
@@ -216,7 +216,7 @@ void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordColl
 void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &data)
 {
     Math math;
-    CollectU collector;
+    WeatherStatsCollector collector;
     const WeatherRecordCollection::YearCabinet& inventory = data.GetInventory();
 
     cout << "The combinations are:\n"
@@ -239,17 +239,17 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
 
             // Collect air speed
             collector.clear();
-            recordFolder.InOrder(CollectU::CollectWindSpeed);
+            recordFolder.InOrder(WeatherStatsCollector::CollectWindSpeed);
             windSpeeds = collector.GetCollection();
 
             // Collect ambient temperature
             collector.clear();
-            recordFolder.InOrder(CollectU::CollectAmbientTemp);
+            recordFolder.InOrder(WeatherStatsCollector::CollectAmbientTemp);
             ambTemps = collector.GetCollection();
 
             // Collect ambient temperature
             collector.clear();
-            recordFolder.InOrder(CollectU::CollectSolarRad);
+            recordFolder.InOrder(WeatherStatsCollector::CollectSolarRad);
             solarR = collector.GetCollection();
         }
     }
@@ -284,7 +284,7 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
 void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollection &data)
 {
     Math math;
-    CollectU collector;
+    WeatherStatsCollector collector;
 
     const WeatherRecordCollection::YearCabinet& inventory = data.GetInventory();
 
@@ -325,17 +325,17 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
         {
             const WeatherRecordCollection::RecordFolder& monthBst = monthMap.At(month);
 
-            monthBst.InOrder(CollectU::CollectWindSpeed);
+            monthBst.InOrder(WeatherStatsCollector::CollectWindSpeed);
             windSpeeds = collector.GetCollection();
 
             collector.clear();
 
-            monthBst.InOrder(CollectU::CollectAmbientTemp);
+            monthBst.InOrder(WeatherStatsCollector::CollectAmbientTemp);
             ambientTemps = collector.GetCollection();
 
             collector.clear();
 
-            monthBst.InOrder(CollectU::CollectSolarRad);
+            monthBst.InOrder(WeatherStatsCollector::CollectSolarRad);
             solarRad = collector.GetCollection();
 
             // Calculate wind speed statistics

@@ -11,7 +11,7 @@
 #include "Date.h"
 #include "Utilities.h"
 #include "Vector.h"
-#include "CollectU.h"
+#include "WeatherStatsCollector.h"
 
 #include <iostream>
 #include <string>
@@ -42,10 +42,10 @@ void CollectDate(const Date& date)
 
 int main()
 {
-    // Initialise test counters and CollectU
+    // Initialise test counters and WeatherStatsCollector
     int passCount = 0;
     int failCount = 0;
-    CollectU collector;
+    WeatherStatsCollector collector;
 
     cout << "==== Running BST Test Cases ====" << endl
          << endl;
@@ -84,7 +84,7 @@ int main()
     cout << endl << endl;
 
     // -------- TEST 4: Data Collection via Static Callback --------
-    cout << "--- Test 4: CollectU collection via static callback ---" << endl;
+    cout << "--- Test 4: WeatherStatsCollector collection via static callback ---" << endl;
     testDateStorage.Clear();
     tree.InOrder(CollectDate);
 
