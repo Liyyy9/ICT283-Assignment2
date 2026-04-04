@@ -15,8 +15,16 @@
 #define COLLECTU_H_INCLUDED
 
 /**
- * @file CollectU
+ * @class CollectU
  * @brief Collector class to store data retrieved from BST via function pointer
+ *
+ *
+ * @author Liyana Afiqah Binte Jazmi
+ * @version 01
+ * @date 31/03/2026, Liyana Afiqah, Initial Implementation
+ *
+ * @version 02
+ * @date 01/04/2026, Liyana Afiqah, Collect functions for weather variables
  */
 
  class CollectU

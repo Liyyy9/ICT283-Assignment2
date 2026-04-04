@@ -63,10 +63,7 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="Main.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
+		<Unit filename="Main.cpp" />
 		<Unit filename="Map.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -119,7 +116,10 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="WeatherRecordTest.cpp" />
+		<Unit filename="WeatherRecordTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
