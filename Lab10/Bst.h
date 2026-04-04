@@ -16,10 +16,14 @@
 using std::cout;
 using std::endl;
 
-    /**
-     * @class Bst
-     * @brief A simple recursive Binary Search Tree template
-     */
+/**
+ * @class Bst
+ * @brief A simple recursive Binary Search Tree template
+ *
+ * @author Liyana Afiqah Binte Jazmi
+ * @version 01
+ * @date 31/03/2026, Liyana Afiqah, Initial Implementation
+*/
 
 template <class T>
 class Bst

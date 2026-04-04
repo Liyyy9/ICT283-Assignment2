@@ -48,14 +48,6 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="CollectU.cpp" />
-		<Unit filename="CollectU.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="CollectUTest.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
 		<Unit filename="Constants.h" />
 		<Unit filename="Date.cpp" />
 		<Unit filename="Date.h" />
@@ -117,6 +109,14 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="WeatherRecordTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="WeatherStatsCollector.cpp" />
+		<Unit filename="WeatherStatsCollector.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="WeatherStatsCollectorTest.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>

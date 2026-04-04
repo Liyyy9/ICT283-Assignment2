@@ -18,7 +18,6 @@
  * @class WeatherStatsCollector
  * @brief Collector class to store data retrieved from BST via function pointer
  *
- *
  * @author Liyana Afiqah Binte Jazmi
  * @version 01
  * @date 31/03/2026, Liyana Afiqah, Initial Implementation
