@@ -1,5 +1,5 @@
 // ===================================================================
-// CollectU.h
+// WeatherStatsCollector.h
 //      Collector class to store data retrieved from BST via fpointer
 //
 // Student: Liyana Afiqah Binte Jazmi
@@ -11,11 +11,11 @@
 #include "Vector.h"
 #include "WeatherRecord.h"
 
-#ifndef COLLECTU_H_INCLUDED
-#define COLLECTU_H_INCLUDED
+#ifndef WeatherStatsCollector_H_INCLUDED
+#define WeatherStatsCollector_H_INCLUDED
 
 /**
- * @class CollectU
+ * @class WeatherStatsCollector
  * @brief Collector class to store data retrieved from BST via function pointer
  *
  *
@@ -27,7 +27,7 @@
  * @date 01/04/2026, Liyana Afiqah, Collect functions for weather variables
  */
 
- class CollectU
+ class WeatherStatsCollector
  {
  public:
     /**
@@ -73,7 +73,7 @@
      void clear();
 
  private:
-    static Vector<double> A;      /// Storage for collected numeric data
+    static Vector<double> m_collection;      /// Storage for collected numeric data
  };
 
-#endif // COLLECTU_H_INCLUDED
+#endif // WeatherStatsCollector_H_INCLUDED

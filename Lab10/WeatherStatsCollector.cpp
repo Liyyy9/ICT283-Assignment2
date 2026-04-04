@@ -1,5 +1,5 @@
 // ===================================================================
-// CollectU.cpp
+// WeatherStatsCollector.cpp
 //      Collector class to store data retrieved from BST via fpointer
 //
 // Student: Liyana Afiqah Binte Jazmi
@@ -7,7 +7,7 @@
 // Project: ICT283 - Assignment 2
 // ===================================================================
 
-#include "CollectU.h"
+#include "WeatherStatsCollector.h"
 #include "Utilities.h"
 #include "Vector.h"
 
@@ -17,46 +17,46 @@ using std::cout;
 using std::endl;
 
 // Initialise static member
-Vector<double> CollectU::A;
+Vector<double> WeatherStatsCollector::m_collection;
 
 // Extracts the wind speed in km/h from a weather record and adds it to the collection
-void CollectU::CollectWindSpeed(const WeatherRecord& record)
+void WeatherStatsCollector::CollectWindSpeed(const WeatherRecord& record)
 {
-    A.Add(record.GetSpeedKmH());
+    m_collection.Add(record.GetSpeedKmH());
 }
 
 // Extracts the ambient temperature from a weather record and adds it to the collection
-void CollectU::CollectAmbientTemp(const WeatherRecord& record)
+void WeatherStatsCollector::CollectAmbientTemp(const WeatherRecord& record)
 {
-    A.Add(record.GetAmbTemp());
+    m_collection.Add(record.GetAmbTemp());
 }
 
 // Extracts the solar radiation from a weather record and adds it to the collection
-void CollectU::CollectSolarRad(const WeatherRecord& record)
+void WeatherStatsCollector::CollectSolarRad(const WeatherRecord& record)
 {
-    A.Add(record.GetSolarRad());
+    m_collection.Add(record.GetSolarRad());
 }
 
 // Returns the size of the collection
-int CollectU::size() const
+int WeatherStatsCollector::size() const
 {
-    return A.Size();
+    return m_collection.Size();
 }
 
 // Indexed access to the collection
-double& CollectU::operator[](int k)
+double& WeatherStatsCollector::operator[](int k)
 {
-    return CollectU::A[k];
+    return WeatherStatsCollector::m_collection[k];
 }
 
 // Returns the entire collection
-Vector<double>& CollectU::GetCollection()
+Vector<double>& WeatherStatsCollector::GetCollection()
 {
-    return A;
+    return m_collection;
 }
 
 // Clears the collection
-void CollectU::clear()
+void WeatherStatsCollector::clear()
 {
-    A.Clear();
+    m_collection.Clear();
 }
