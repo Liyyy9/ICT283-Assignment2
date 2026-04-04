@@ -38,8 +38,10 @@ int main()
     // Initialize CSV header reader, Menu Handler
     CSVLoader loader;
 
+    // Load all the files listed in data_source.txt
     WeatherRecordCollection weather_data = loader.LoadAllCSV();
 
+    // Return early if there are nothing loaded
     if(weather_data.GetYearCount() == 0)
     {
         cout << "Failed to load data\n";
