@@ -25,17 +25,25 @@ void WeatherRecordCollection::Insert(const WeatherRecord &record)
     m_inventory[year][month].Insert(record);
 }
 
+// Insertion by using the middle element of a sorted list
 void WeatherRecordCollection::InsertFromMidPoint(Vector<WeatherRecord>& fileRecords, int low, int high)
 {
+    // Return early if range invalid
     if(low > high)
     {
         return;
     }
 
+    // Calculate the middle index to use as the "root" of the current sub-section
     int mid = low + (high - low) / 2;
 
+    // Insert the middle element first to keep the BST balanced
     this->Insert(fileRecords[mid]);
+
+    // Recursively handle the left half (elements smaller than mid)
     InsertFromMidPoint(fileRecords, low, mid - 1);
+
+    // Recursively handle the right half (elements larger than mid)
     InsertFromMidPoint(fileRecords, mid + 1, high);
 }
 
@@ -51,6 +59,7 @@ void WeatherRecordCollection::Clear()
     m_inventory.Clear();
 }
 
+// Returns a read-only reference to the internal record collection
 const WeatherRecordCollection::YearCabinet& WeatherRecordCollection::GetInventory() const
 {
     return m_inventory;

@@ -47,10 +47,10 @@ public:
      * @name Data Hierarchy Type Definitions
      * @brief Definitions that map the nested storage structure to a physical filing system analogy.
      *
-     * * The hierarchy is organized as follows:
-     * - **YearCabinet (Outer Map): Represents the entire filing cabinet, where each "Drawer" is indexed by a Year (int).
-     * - **MonthDrawer (Inner Map): Represents a single year's drawer, containing 12 "Folders" indexed by Month (int).
-     * - **RecordFolder (BST):Represents a specific month's folder. It stores individual WeatherRecord "files"
+     * The hierarchy is organized as follows:
+     * - YearCabinet (Outer Map): Represents the entire filing cabinet, where each "Drawer" is indexed by a Year (int).
+     * - MonthDrawer (Inner Map): Represents a single year's drawer, containing 12 "Folders" indexed by Month (int).
+     * - RecordFolder (BST):Represents a specific month's folder. It stores individual WeatherRecord "files"
      * sorted by the BST's internal ordering (Date/Time).
      *
      */
@@ -75,6 +75,17 @@ public:
      */
     void Insert(const WeatherRecord &record);
 
+    /**
+     * @brief Recursively inserts records from a sorted vector into the collection.
+     *
+     * Uses a binary-search-like approach to pick the midpoint of the vector
+     * as the insertion root. This ensures the underlying BST remains balanced
+     * when processing sorted data, maintaining O(log n) search times.
+     *
+     * @param fileRecords The vector containing the sorted weather records.
+     * @param low The starting index of the current range.
+     * @param high The ending index of the current range.
+     */
     void InsertFromMidPoint(Vector<WeatherRecord>& fileRecords, int low, int high);
 
     /**
@@ -90,9 +101,12 @@ public:
     void Clear();
 
     /**
-     * @brief Provides a read-only access to the internal storage
+     * @brief Retrieves the entire weather record inventory.
      *
-     * @return const map reference to the inventory
+     * Returns a constant reference to the YearCabinet map/data structure
+     * containing all stored weather data.
+     *
+     * @return const YearCabinet& Reference to the internal inventory.
      */
      const YearCabinet& GetInventory() const;
 
