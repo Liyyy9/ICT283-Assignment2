@@ -44,7 +44,7 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
     CSVHeaderReader headerReader;
     int fileCount = 0;
     int total = 0;
-    int recordsInThisFile = 0;
+    int recordsInThisFile;
 
     // Reading data_source.txt for file name
     string dataSource = "data_source.txt";
@@ -63,9 +63,10 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
 
     // Extracting file name from data_source.txt
     string infileName;
-    while(getline(source, infileName))
+    while (getline(source, infileName))
     {
         fileRecords.Clear();
+        recordsInThisFile = 0;
 
         if (infileName.empty())
         {
@@ -182,7 +183,6 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
             fileRecords.Add(record);
 
             recordsInThisFile++;
-
         }
 
         Sort sorter;
@@ -202,7 +202,8 @@ WeatherRecordCollection CSVLoader::LoadAllCSV()
     source.close();
 
     // Tell the user how many records were loaded
-    cout << "Total records loaded: " << total << " from " << fileCount << " files.\n" << endl
+    cout << "Total records loaded: " << total << " from " << fileCount << " files.\n"
+         << endl
          << endl;
 
     return weather_data;
