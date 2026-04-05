@@ -71,7 +71,7 @@ public:
 
     /**
      * @brief Access value associated to key
-     * @param k The key search for
+     * @param key The key search for
      * @return const T& Constant reference to the value associated with the key
      */
      const T& At(const K& key) const;
@@ -143,25 +143,28 @@ void Map<K, T>::Clear()
     m_data.clear();
 }
 
-// Iterators implementation
+// Returns an iterator to the first element of the map.
 template <class K, class T>
 typename Map<K, T>::iterator Map<K, T>::begin()
 {
     return m_data.begin();
 }
 
+// Returns a constant iterator to the first element of the map.
 template <class K, class T>
 typename Map<K, T>::const_iterator Map<K, T>::begin() const
 {
     return m_data.begin();
 }
 
+// Returns an iterator to the element following the last element.
 template <class K, class T>
 typename Map<K, T>::iterator Map<K, T>::end()
 {
     return m_data.end();
 }
 
+// Returns a constant iterator to the element following the last element.
 template <class K, class T>
 typename Map<K, T>::const_iterator Map<K, T>::end() const
 {

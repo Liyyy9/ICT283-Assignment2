@@ -44,19 +44,27 @@ class WeatherRecordCollection
 
 public:
     /**
-     * @name Data Hierarchy Type Definitions
-     * @brief Definitions that map the nested storage structure to a physical filing system analogy.
-     *
-     * The hierarchy is organized as follows:
-     * - YearCabinet (Outer Map): Represents the entire filing cabinet, where each "Drawer" is indexed by a Year (int).
-     * - MonthDrawer (Inner Map): Represents a single year's drawer, containing 12 "Folders" indexed by Month (int).
-     * - RecordFolder (BST):Represents a specific month's folder. It stores individual WeatherRecord "files"
-     * sorted by the BST's internal ordering (Date/Time).
-     *
-     */
+    * @name Data Hierarchy Type Definitions
+    * @brief Definitions that map the nested storage structure to a physical filing system analogy.
+    *
+    * The hierarchy is organized as follows:
+    * - YearCabinet (Outer Map): Represents the entire filing cabinet, where each "Drawer" is indexed by a Year (int).
+    * - MonthDrawer (Inner Map): Represents a single year's drawer, containing 12 "Folders" indexed by Month (int).
+    * - RecordFolder (BST):Represents a specific month's folder. It stores individual WeatherRecord "files"
+    * sorted by the BST's internal ordering (Date/Time).
+    *
+    */
+    ///@{
+
+    /** @brief Represents a specific month's folder storing sorted WeatherRecords. */
     typedef Bst<WeatherRecord> RecordFolder;
+
+    /** @brief Represents a single year's drawer containing 12 Month folders. */
     typedef Map<int, RecordFolder> MonthDrawer;
+
+    /** @brief Represents the entire filing cabinet indexed by Year. */
     typedef Map<int, MonthDrawer> YearCabinet;
+    ///@}
 
     /**
      * @brief Default constructor - initialises empty collection
