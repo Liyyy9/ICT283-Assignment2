@@ -69,8 +69,27 @@ public:
      */
     double CalculateSD(const Vector<double> &data, double mean);
 
+    /**
+     * @brief Calculates the sample Pearson Correlation Coefficient(SPCC) between two datasets
+     *
+     * This measures the statistical dependence between the rankings of two variables
+     *
+     * @note Both vectors must be of the same size
+     *
+     * @param v1 The first vector of numerical data
+     * @param v2 The second vector of numerical data
+     * @return double The correlation coefficient (typically between -1.0 and 1.0)
+     */
     double CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2);
 
+    /**
+     * @brief Calculates the Mean Absolute Deviation (MAD) of a dataset
+     *
+     * MAD is the average of the absolute differences between each data point and the mean
+     *
+     * @param data The vector of numerical values to analyse
+     * @return double The calculated Mean Absolute Deviation
+     */
     double CalculateMAD(const Vector<double> &data);
 };
 
