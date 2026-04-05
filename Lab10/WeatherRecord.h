@@ -152,7 +152,26 @@ public:
      */
     void SetSolarRad(int sr);
 
+    /**
+     * @brief Overloaded less-than operator to compare two WeatherRecord objects.
+     *
+     * Used for sorting purposes. Compares records based on their time stamp
+     * (Date and Time). If dates are equal, the comparison falls back to the time.
+     *
+     * @param other The WeatherRecord object to compare against.
+     * @return true if this record's time stamp is earlier than the other; false otherwise.
+     */
     bool operator<(const WeatherRecord& other) const;
+
+    /**
+     * @brief Overloaded equality operator to check if two WeatherRecord objects are identical.
+     *
+     * Evaluates whether two records represent the same point in time by
+     * comparing their Date and Time fields.
+     *
+     * @param other The WeatherRecord object to compare against.
+     * @return true if both records have the same date and time; false otherwise.
+     */
     bool operator==(const WeatherRecord& other) const;
 
 private:

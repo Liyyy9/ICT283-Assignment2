@@ -94,8 +94,10 @@ void WeatherRecord::SetSolarRad(int sr)
     solarRad = sr;
 }
 
+// Operator < to check WeatherRecord time stamp less than other
 bool WeatherRecord::operator<(const WeatherRecord& other) const
 {
+    // Compare Dates
     if(this->d < other.d)
     {
         return true;
@@ -105,15 +107,19 @@ bool WeatherRecord::operator<(const WeatherRecord& other) const
         return false;
     }
 
+    // If dates are the same, compare Time
     return (this->t < other.t);
 }
 
+// Operator < to check WeatherRecord time stamp same as the other
 bool WeatherRecord::operator==(const WeatherRecord& other) const
 {
+    // if Dates are not the same, records are not equal
     if(!(this->d == other.d))
     {
         return false;
     }
 
+    // If Date matches, check Time
     return (this->t == other.t);
 }
