@@ -92,7 +92,27 @@ public:
      */
     void SetMins(int mins);
 
+    /**
+     * @brief Overloaded less-than operator to compare two Time objects
+     *
+     * Determines if this time instance occurs before another based on
+     * chronological order (hours and minutes)
+     *
+     * @param other The Time object to compare against
+     *
+     * @return true if this time is earlier than the other; otherwise false
+     */
     bool operator<(const Time& other) const;
+
+    /**
+     * @brief Overloaded equality operator to check if two Time objects are identical
+     *
+     * Compares the hour and minute values of both Time objects for equality
+     *
+     * @param other The Time object to compare against
+     *
+     * @return true if both time instances are the same; otherwise false
+     */
     bool operator==(const Time& other) const;
 
 private:

@@ -54,6 +54,7 @@ void Time::SetMins(int mins)
     m_mins = mins;
 }
 
+// Operator < to compare time less than the other
 bool Time::operator<(const Time& other) const
 {
     if(this->m_hour != other.m_hour)
@@ -64,6 +65,7 @@ bool Time::operator<(const Time& other) const
     return this->m_mins < other.m_mins;
 }
 
+// Operator == to compare if time is equal to the other
 bool Time::operator==(const Time& other) const
 {
     if(this->m_hour != other.m_hour)
