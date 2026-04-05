@@ -259,17 +259,32 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
             // Collect wind speed
             collector.clear();
             recordFolder.InOrder(WeatherStatsCollector::CollectWindSpeed);
-            windSpeeds = collector.GetCollection();
+            Vector<double> yearlyWind = collector.GetCollection();
+
+            for(int i = 0; i < yearlyWind.Size(); i++)
+            {
+                windSpeeds.Add(yearlyWind[i]);
+            }
 
             // Collect ambient temperature
             collector.clear();
             recordFolder.InOrder(WeatherStatsCollector::CollectAmbientTemp);
-            ambTemps = collector.GetCollection();
+            Vector<double> yearlyTemp = collector.GetCollection();
+
+            for(int i = 0; i < yearlyTemp.Size(); i++)
+            {
+                ambTemps.Add(yearlyTemp[i]);
+            }
 
             // Collect ambient temperature
             collector.clear();
             recordFolder.InOrder(WeatherStatsCollector::CollectSolarRad);
-            solarR = collector.GetCollection();
+            Vector<double> yearlySolar = collector.GetCollection();
+
+            for(int i = 0; i < yearlySolar.Size(); i++)
+            {
+                solarR.Add(yearlySolar[i]);
+            }
         }
     }
     cout << "Sample Pearson Correlation Coefficient for " << GetMonthName(month) << endl;
@@ -297,6 +312,7 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
 
     cout << endl;
 }
+
 
 // Generates comprehensive weather report for all months of a year
 // Calculates wind speed, temperature, and solar radiation statistics
