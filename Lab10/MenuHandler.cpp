@@ -162,10 +162,12 @@ void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordColl
     Math math;
     WeatherStatsCollector collector;
 
+    // Retrieve the nested map structure
     const WeatherRecordCollection::YearCabinet inventory = data.GetInventory();
 
     cout << year << endl;
 
+    // Check if the specific year keys exist in the inventory
     if(!inventory.Contains(year))
     {
         cout << "No data for this year" << endl;
@@ -178,21 +180,28 @@ void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordColl
         // Ensure that storage is empty
         collector.clear();
 
+        // Retrieve the map structure
         const WeatherRecordCollection::MonthDrawer monthMap = inventory.At(year);
 
+        // Check if the month exists in the Map inventory
         if(monthMap.Contains(month))
         {
+            // Retrieve the BST folder
             const WeatherRecordCollection::RecordFolder& monthBst = monthMap.At(month);
 
+            // Sorting the collection
             monthBst.InOrder(WeatherStatsCollector::CollectAmbientTemp);
 
+            // Retrieving the collection
             Vector<double>& results = collector.GetCollection();
 
+            // Statistical computation if data exists
             if(results.Size() > 0)
             {
                 double mean = math.CalculateMean(results);
                 double sd = math.CalculateSD(results, mean);
 
+                // Output data
                 cout << GetMonthName(month) << ": "
                  << "average: " << fixed << setprecision(1) << mean << " degrees C, "
                  << "stdev: " << fixed << setprecision(1) << sd << endl;
@@ -217,6 +226,8 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
 {
     Math math;
     WeatherStatsCollector collector;
+
+    // Retrieve the nested map structure
     const WeatherRecordCollection::YearCabinet& inventory = data.GetInventory();
 
     cout << "The combinations are:\n"
@@ -225,19 +236,27 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
          << "\tc) T_R: Ambient Air Temperature (T) and Solar Radiation (R)\n"
          << endl;
 
+    // Initialising vectors to store weather variables
     Vector<double> windSpeeds;
     Vector<double> ambTemps;
     Vector<double> solarR;
 
+    // Ensure that the collector is clear
     collector.clear();
+
+    // Looping through every year stored in the data structure
     for(WeatherRecordCollection::YearCabinet::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
     {
+        // Retrieve the Inner Map Month structure
         const WeatherRecordCollection::MonthDrawer& monthDrawer = it->second;
+
+        // Check if the monthDrawer contains month
         if(monthDrawer.Contains(month))
         {
+            // If month exists, retrieve BST folder
             const WeatherRecordCollection::RecordFolder& recordFolder = monthDrawer.At(month);
 
-            // Collect air speed
+            // Collect wind speed
             collector.clear();
             recordFolder.InOrder(WeatherStatsCollector::CollectWindSpeed);
             windSpeeds = collector.GetCollection();
@@ -257,6 +276,7 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
 
     if(windSpeeds.Size() < 2)
     {
+        // If no data
         cout << "S_T: No data" << endl;
         cout << "S_R: No data" << endl;
         cout << "T_R: No data" << endl;
@@ -264,6 +284,7 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
     }
     else
     {
+        // Statistical computation if data exists
         double s_t = math.CalculateSPCC(windSpeeds, ambTemps);
         double s_r = math.CalculateSPCC(windSpeeds, solarR);
         double t_r = math.CalculateSPCC(ambTemps, solarR);
@@ -310,8 +331,10 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
         return;
     }
 
+    // Retreive inner map month structure
     const WeatherRecordCollection::MonthDrawer& monthMap = inventory.At(year);
 
+    // Initialise vectors for weather variables
     Vector<double> windSpeeds;
     Vector<double> ambientTemps;
     Vector<double> solarRad;
@@ -319,22 +342,28 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
     // Iterate through all 12 months
     for (int month = 1; month <= 12; month++)
     {
+        // Ensure that collector is empty
         collector.clear();
 
+        // Check if month exists
         if(monthMap.Contains(month))
         {
+            // If month exists, retrieve BST folder
             const WeatherRecordCollection::RecordFolder& monthBst = monthMap.At(month);
 
+            // Collect Wind Speed
             monthBst.InOrder(WeatherStatsCollector::CollectWindSpeed);
             windSpeeds = collector.GetCollection();
 
             collector.clear();
 
+            // Collect ambient temperature
             monthBst.InOrder(WeatherStatsCollector::CollectAmbientTemp);
             ambientTemps = collector.GetCollection();
 
             collector.clear();
 
+            // Collect solar radiation
             monthBst.InOrder(WeatherStatsCollector::CollectSolarRad);
             solarRad = collector.GetCollection();
 
