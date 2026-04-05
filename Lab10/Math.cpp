@@ -69,7 +69,7 @@ double Math::CalculateSD(const Vector<double> &data, double mean)
 double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
 {
     // Check if size between two vectors are the same
-    if(v1.Size() != v2.Size() || v1.Size() < 1)
+    if (v1.Size() != v2.Size() || v1.Size() < 1)
     {
         return 0.0;
     }
@@ -81,11 +81,11 @@ double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
     double yMean = CalculateMean(v2);
 
     // part 2: sum of part 5 (numerator)
-        // part 3: x-x_ and x-x_2
-        // part 4: y-y_ and y-y_2
-        // part 5: x-x_ * y-y_
-        // part 6: sum of part 2 squared
-        // part 7: sum of part 3 squared
+    // part 3: x-x_ and x-x_2
+    // part 4: y-y_ and y-y_2
+    // part 5: x-x_ * y-y_
+    // part 6: sum of part 2 squared
+    // part 7: sum of part 3 squared
     double xDiff = 0.0;
     double yDiff = 0.0;
     double sumXDiffSq = 0.0;
@@ -94,7 +94,7 @@ double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
     double numerator = 0.0;
     double denominator = 0.0;
 
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         // Calculate x-x bar and y-y bar
         xDiff = v1[i] - xMean;
@@ -106,13 +106,12 @@ double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
         // Sum up the squares for the denominator
         sumXDiffSq += (xDiff * xDiff);
         sumYDiffSq += (yDiff * yDiff);
-
     }
 
     // part 8: sqrt part 6 * part 7
     denominator = sqrt(sumXDiffSq * sumYDiffSq);
 
-    if(denominator <= 0)
+    if (denominator <= 0)
     {
         return 0.0;
     }
@@ -128,7 +127,7 @@ double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
 double Math::CalculateMAD(const Vector<double> &data)
 {
     // Check if dataset is empty
-    if(data.Size() == 0)
+    if (data.Size() == 0)
     {
         return 0.0;
     }
@@ -137,15 +136,15 @@ double Math::CalculateMAD(const Vector<double> &data)
     double datasetMean = CalculateMean(data);
     int size = data.Size();
 
-    double diff = 0.0;          // x - mean
+    double diff = 0.0; // x - mean
     double numerator = 0.0;
 
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         diff = data[i] - datasetMean;
 
         // Takes the absolute value of diff; avoiding negatives
-        if(diff < 0)
+        if (diff < 0)
         {
             diff = -diff;
         }
@@ -157,6 +156,3 @@ double Math::CalculateMAD(const Vector<double> &data)
 
     return MAD;
 }
-
-
-

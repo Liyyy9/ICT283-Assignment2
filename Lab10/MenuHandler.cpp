@@ -122,15 +122,15 @@ void MenuHandler::WindAvgStdDev_Choice1(int month, int year, const WeatherRecord
     collector.clear();
 
     // Retrieve the nested map structure
-    const WeatherRecordCollection::YearCabinet& inventory = data.GetInventory();
+    const WeatherRecordCollection::YearCabinet &inventory = data.GetInventory();
 
     // Check if the specific year and month keys exist in the inventory
-    if(inventory.Contains(year) && inventory.At(year).Contains(month))
+    if (inventory.Contains(year) && inventory.At(year).Contains(month))
     {
         // Traverses the BST for the specific month/year and populates the collection
         inventory.At(year).At(month).InOrder(WeatherStatsCollector::CollectWindSpeed);
 
-        Vector<double>& results = collector.GetCollection();
+        Vector<double> &results = collector.GetCollection();
 
         // Compute statistical calculations
         double mean = math.CalculateMean(results);
@@ -152,7 +152,6 @@ void MenuHandler::WindAvgStdDev_Choice1(int month, int year, const WeatherRecord
     cout << endl;
 }
 
-
 // Analyses ambient temperature for each month of a specified year
 // Loops through all 12 months, filtering dataset for each month and year
 // Calculates and displays mean and sample standard deviation in degrees C for each month
@@ -168,7 +167,7 @@ void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordColl
     cout << year << endl;
 
     // Check if the specific year keys exist in the inventory
-    if(!inventory.Contains(year))
+    if (!inventory.Contains(year))
     {
         cout << "No data for this year" << endl;
         return;
@@ -184,27 +183,27 @@ void MenuHandler::AmbientTempAvgStdDev_Choice2(int year, const WeatherRecordColl
         const WeatherRecordCollection::MonthDrawer monthMap = inventory.At(year);
 
         // Check if the month exists in the Map inventory
-        if(monthMap.Contains(month))
+        if (monthMap.Contains(month))
         {
             // Retrieve the BST folder
-            const WeatherRecordCollection::RecordFolder& monthBst = monthMap.At(month);
+            const WeatherRecordCollection::RecordFolder &monthBst = monthMap.At(month);
 
             // Sorting the collection
             monthBst.InOrder(WeatherStatsCollector::CollectAmbientTemp);
 
             // Retrieving the collection
-            Vector<double>& results = collector.GetCollection();
+            Vector<double> &results = collector.GetCollection();
 
             // Statistical computation if data exists
-            if(results.Size() > 0)
+            if (results.Size() > 0)
             {
                 double mean = math.CalculateMean(results);
                 double sd = math.CalculateSD(results, mean);
 
                 // Output data
                 cout << GetMonthName(month) << ": "
-                 << "average: " << fixed << setprecision(1) << mean << " degrees C, "
-                 << "stdev: " << fixed << setprecision(1) << sd << endl;
+                     << "average: " << fixed << setprecision(1) << mean << " degrees C, "
+                     << "stdev: " << fixed << setprecision(1) << sd << endl;
             }
             else
             {
@@ -228,7 +227,7 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
     WeatherStatsCollector collector;
 
     // Retrieve the nested map structure
-    const WeatherRecordCollection::YearCabinet& inventory = data.GetInventory();
+    const WeatherRecordCollection::YearCabinet &inventory = data.GetInventory();
 
     cout << "The combinations are:\n"
          << "\ta) S_T: Average Wind Speed (S) and Ambient Air Temperature (T)\n"
@@ -245,23 +244,23 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
     collector.clear();
 
     // Looping through every year stored in the data structure
-    for(WeatherRecordCollection::YearCabinet::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
+    for (WeatherRecordCollection::YearCabinet::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
     {
         // Retrieve the Inner Map Month structure
-        const WeatherRecordCollection::MonthDrawer& monthDrawer = it->second;
+        const WeatherRecordCollection::MonthDrawer &monthDrawer = it->second;
 
         // Check if the monthDrawer contains month
-        if(monthDrawer.Contains(month))
+        if (monthDrawer.Contains(month))
         {
             // If month exists, retrieve BST folder
-            const WeatherRecordCollection::RecordFolder& recordFolder = monthDrawer.At(month);
+            const WeatherRecordCollection::RecordFolder &recordFolder = monthDrawer.At(month);
 
             // Collect wind speed
             collector.clear();
             recordFolder.InOrder(WeatherStatsCollector::CollectWindSpeed);
             Vector<double> yearlyWind = collector.GetCollection();
 
-            for(int i = 0; i < yearlyWind.Size(); i++)
+            for (int i = 0; i < yearlyWind.Size(); i++)
             {
                 windSpeeds.Add(yearlyWind[i]);
             }
@@ -271,7 +270,7 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
             recordFolder.InOrder(WeatherStatsCollector::CollectAmbientTemp);
             Vector<double> yearlyTemp = collector.GetCollection();
 
-            for(int i = 0; i < yearlyTemp.Size(); i++)
+            for (int i = 0; i < yearlyTemp.Size(); i++)
             {
                 ambTemps.Add(yearlyTemp[i]);
             }
@@ -281,7 +280,7 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
             recordFolder.InOrder(WeatherStatsCollector::CollectSolarRad);
             Vector<double> yearlySolar = collector.GetCollection();
 
-            for(int i = 0; i < yearlySolar.Size(); i++)
+            for (int i = 0; i < yearlySolar.Size(); i++)
             {
                 solarR.Add(yearlySolar[i]);
             }
@@ -289,13 +288,12 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
     }
     cout << "Sample Pearson Correlation Coefficient for " << GetMonthName(month) << endl;
 
-    if(windSpeeds.Size() < 2)
+    if (windSpeeds.Size() < 2)
     {
         // If no data
         cout << "S_T: No data" << endl;
         cout << "S_R: No data" << endl;
         cout << "T_R: No data" << endl;
-
     }
     else
     {
@@ -313,7 +311,6 @@ void MenuHandler::DisplaysPCC_Choice3(int month, const WeatherRecordCollection &
     cout << endl;
 }
 
-
 // Generates comprehensive weather report for all months of a year
 // Calculates wind speed, temperature, and solar radiation statistics
 // Displays results to console and exports to WindTempSolar.csv
@@ -323,7 +320,7 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
     Math math;
     WeatherStatsCollector collector;
 
-    const WeatherRecordCollection::YearCabinet& inventory = data.GetInventory();
+    const WeatherRecordCollection::YearCabinet &inventory = data.GetInventory();
 
     // Open output file for CSV export
     string exportFileName = "WindTempSolar.csv";
@@ -340,7 +337,7 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
 
     bool dataLoaded = false;
 
-    if(!inventory.Contains(year))
+    if (!inventory.Contains(year))
     {
         cout << "No Data" << endl;
         ofile << "No Data" << endl;
@@ -348,12 +345,7 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
     }
 
     // Retreive inner map month structure
-    const WeatherRecordCollection::MonthDrawer& monthMap = inventory.At(year);
-
-    // Initialise vectors for weather variables
-    Vector<double> windSpeeds;
-    Vector<double> ambientTemps;
-    Vector<double> solarRad;
+    const WeatherRecordCollection::MonthDrawer &monthMap = inventory.At(year);
 
     // Iterate through all 12 months
     for (int month = 1; month <= 12; month++)
@@ -362,26 +354,46 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
         collector.clear();
 
         // Check if month exists
-        if(monthMap.Contains(month))
+        if (monthMap.Contains(month))
         {
+            // Initialise vectors for weather variables
+            Vector<double> windSpeeds;
+            Vector<double> ambientTemps;
+            Vector<double> solarRad;
+
             // If month exists, retrieve BST folder
-            const WeatherRecordCollection::RecordFolder& monthBst = monthMap.At(month);
+            const WeatherRecordCollection::RecordFolder &monthBst = monthMap.At(month);
 
             // Collect Wind Speed
             monthBst.InOrder(WeatherStatsCollector::CollectWindSpeed);
-            windSpeeds = collector.GetCollection();
+            Vector<double> tempWind = collector.GetCollection();
+
+            for (int i = 0; i < tempWind.Size(); i++)
+            {
+                windSpeeds.Add(tempWind[i]);
+            }
 
             collector.clear();
 
             // Collect ambient temperature
             monthBst.InOrder(WeatherStatsCollector::CollectAmbientTemp);
-            ambientTemps = collector.GetCollection();
+            Vector<double> tempTemp = collector.GetCollection();
+
+            for (int i = 0; i < tempTemp.Size(); i++)
+            {
+                ambientTemps.Add(tempTemp[i]);
+            }
 
             collector.clear();
 
             // Collect solar radiation
             monthBst.InOrder(WeatherStatsCollector::CollectSolarRad);
-            solarRad = collector.GetCollection();
+            Vector<double> tempSolar = collector.GetCollection();
+
+            for (int i = 0; i < tempSolar.Size(); i++)
+            {
+                solarRad.Add(tempSolar[i]);
+            }
 
             // Calculate wind speed statistics
             double avgWind = math.CalculateMean(windSpeeds);
@@ -407,13 +419,13 @@ void MenuHandler::DisplayAllFindings_Choice4(int year, const WeatherRecordCollec
             cout << GetMonthName(month) << ","
                  << fixed << setprecision(1)
                  << avgWind << "(" << sdWind << "," << madWind << "),"
-                 << avgTemp << "(" << sdTemp << "," << madTemp <<  "),"
+                 << avgTemp << "(" << sdTemp << "," << madTemp << "),"
                  << totalkWhm2 << endl;
 
             ofile << GetMonthName(month) << ","
                   << fixed << setprecision(1)
                   << avgWind << "(" << sdWind << " " << madWind << "),"
-                  << avgTemp << "(" << sdTemp << "" << madTemp <<  "),"
+                  << avgTemp << "(" << sdTemp << "" << madTemp << "),"
                   << totalkWhm2 << endl;
 
             dataLoaded = true;
