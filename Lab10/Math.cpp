@@ -64,6 +64,8 @@ double Math::CalculateSD(const Vector<double> &data, double mean)
     return std_dev;
 }
 
+// Calculates the sPCC of the weather variable across
+// Computes using the formula = sum((x - xMean)*(y-yMean)) / sqrt((sum((x-xMean)^2 * (y-yMean)^2))
 double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
 {
     // Check if size between two vectors are the same
@@ -82,7 +84,7 @@ double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
         // part 3: x-x_ and x-x_2
         // part 4: y-y_ and y-y_2
         // part 5: x-x_ * y-y_
-        // part 6: sum of part 2 square
+        // part 6: sum of part 2 squared
         // part 7: sum of part 3 squared
     double xDiff = 0.0;
     double yDiff = 0.0;
@@ -121,6 +123,8 @@ double Math::CalculateSPCC(const Vector<double> &v1, const Vector<double> &v2)
     return r;
 }
 
+// Calculates the Mean Absolute Deviation (MAD) for ungrouped data
+// Computes using the formula = sum of (x - mean) / size of dataset
 double Math::CalculateMAD(const Vector<double> &data)
 {
     // Check if dataset is empty
